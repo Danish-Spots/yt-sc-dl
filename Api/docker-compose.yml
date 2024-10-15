@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+  backend:
+    build:
+      context: . # Path to your ASP.NET Core project
+      dockerfile: Dockerfile
+    container_name: api-backend
+    ports:
+      - "4201:8080"
+      - "4233:443"
