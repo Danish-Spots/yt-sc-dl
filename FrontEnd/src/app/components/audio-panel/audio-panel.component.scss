@@ -1,0 +1,23 @@
+:host {
+  margin: 32px;
+  display: flex;
+  flex-direction: column;
+
+  .input-container {
+    display: flex;
+    flex-direction: row;
+    .input-field {
+      flex: 1;
+      margin-right: 16px;
+    }
+  }
+}
+
+.image-container {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  img {
+    object-fit: contain;
+  }
+}

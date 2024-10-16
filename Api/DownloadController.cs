@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Text.Json;
 
 /// <summary>
 /// Api endpoint to get version of yt-dlp installed
@@ -45,7 +46,7 @@ public class DownloadController : ControllerBase
     [HttpPost("video-data")]
     public IActionResult GetVideoData([FromBody] DownloadRequest request)
     {
-        string arguments = $"--list-thumbnails --print title --print id {request.VideoUrl}";
+        string arguments = $"-j {request.VideoUrl}'";
 
         ProcessStartInfo psi = new ProcessStartInfo
         {
@@ -62,30 +63,30 @@ public class DownloadController : ControllerBase
         {
             using (Process process = Process.Start(psi))
             {
+
+
+                // object resultObj = JsonSerializer.Deserialize<object>(resultString);
+                string resultString = process.StandardOutput.ReadToEnd();
+                VideoDataJson resultObj = JsonSerializer.Deserialize<VideoDataJson>(resultString);
                 process.WaitForExit();
+                // string[] result = process.StandardOutput.ReadToEnd().Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                // VideoDataResult resultObj = new VideoDataResult();
+                // resultObj.images = new List<ImageDto>();
+                // foreach (var item in result)
+                // {
+                //     // Hack for identifying title, thumbnails
+                //     if (item.Contains(".com"))
+                //     {
+                //         string[] imageData = item.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+                //         resultObj.images.Add(new ImageDto(imageData[0].Trim(), imageData[1].Trim(), imageData[2].Trim(), imageData[3].Trim()));
+                //     }
+                //     else if (!item.Contains("ID"))
+                //     {
+                //         resultObj.title = item.Trim();
+                //     }
+                // }
 
-                string[] result = process.StandardOutput.ReadToEnd().Split("\n");
-                VideoDataResult resultObj = new VideoDataResult();
-                resultObj.images = new List<ImageDto>();
-                foreach (var item in result)
-                {
-                    // Hack for identifying title, thumbnails, id
-                    if (item.Contains(".com"))
-                    {
-                        string[] imageData = item.Split([' '], StringSplitOptions.RemoveEmptyEntries);
-                        resultObj.images.Add(new ImageDto(imageData[0].Trim(), imageData[1].Trim(), imageData[2].Trim(), imageData[3].Trim()));
-                    }
-                    else if (item.Contains(" "))
-                    {
-                        resultObj.title = item.Trim();
-                    }
-                    else if (!String.IsNullOrWhiteSpace(item))
-                    {
-                        resultObj.id = item;
-                    }
-                }
-
-                return Ok(resultObj);
+                return Ok(new { resultObj.thumbnail, resultObj.channel, resultObj.title });
             }
         }
         catch (Exception e)
@@ -164,4 +165,11 @@ public class VideoDataResult
     public string title { get; set; }
     public List<ImageDto> images { get; set; }
     public string id { get; set; }
+}
+
+public class VideoDataJson
+{
+    public string title { get; set; }
+    public string thumbnail { get; set; }
+    public string channel { get; set; }
 }

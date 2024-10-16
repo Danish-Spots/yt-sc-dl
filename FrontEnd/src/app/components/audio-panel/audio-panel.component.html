@@ -1,7 +1,19 @@
-<mat-form-field appearance="outline">
-  <mat-label>Url</mat-label>
-  <input matInput [formControl]="FormControl" />
-  @if (FormControl.hasError('InvalidUrl')) {
-  <mat-error>Invalid youtube url</mat-error>
-  }
-</mat-form-field>
+<div class="input-container">
+  <mat-form-field class="input-field" appearance="outline">
+    <mat-label>Url</mat-label>
+    <input matInput [formControl]="FormControl" />
+    @if (FormControl.hasError('InvalidUrl')) {
+    <mat-error>Invalid youtube url</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-fab (click)="getData()"><mat-icon>download</mat-icon></button>
+</div>
+<div>
+  title: {{ data?.title }}
+  <br />
+  channel: {{ data?.channel }}
+  <div class="image-container">
+    <img [ngSrc]="data?.thumbnail" priority fill />
+  </div>
+</div>

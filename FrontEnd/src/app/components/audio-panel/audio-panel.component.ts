@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,12 +13,26 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { filter, tap } from 'rxjs';
+import { ApiService } from '../../services/api.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-audio-panel',
   templateUrl: './audio-panel.component.html',
+  styleUrl: './audio-panel.component.scss',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, ReactiveFormsModule],
+  imports: [
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    JsonPipe,
+    NgOptimizedImage,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AudioPanelComponent implements OnInit {
   FormControl = new FormControl('', [this.verifyUrl]);
@@ -28,6 +48,14 @@ export class AudioPanelComponent implements OnInit {
     'vorbis',
     'wav',
   ];
+
+  data!: any;
+
+  constructor(
+    private apiService: ApiService,
+    private cdRef: ChangeDetectorRef
+  ) {}
+
   ngOnInit(): void {
     this.FormControl.statusChanges
       .pipe(
@@ -37,6 +65,14 @@ export class AudioPanelComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  getData() {
+    if (this.FormControl.value)
+      this.apiService.GetMetadata(this.FormControl.value).subscribe((val) => {
+        this.data = val;
+        this.cdRef.markForCheck();
+      });
   }
 
   private verifyUrl(control: AbstractControl) {
