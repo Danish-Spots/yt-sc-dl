@@ -49,10 +49,10 @@ using System.IO;
 
             // Specify the output path for the downloaded audio file
             string outputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "downloads");
-            string outputFilePath = Path.Combine(outputDirectory, $"{Path.GetFileNameWithoutExtension(videoUrl)}.mp3");
+            string outputFilePath = Path.Combine(outputDirectory, $"{Path.GetFileNameWithoutExtension(videoUrl)}.flac");
 
             // yt-dlp command and arguments
-            string arguments = $"-x --audio-format mp3 -o \"{outputFilePath}\" {videoUrl}";
+            string arguments = $"-x --embed-metadata --embed-thumbnail --audio-format flac --audio-quality 0 -o \"{outputFilePath}\" {videoUrl}";
 
             // Start the process
             ProcessStartInfo psi = new ProcessStartInfo
@@ -80,7 +80,7 @@ using System.IO;
                     else
                     {
                         // Handle errors and return appropriate response
-                        string error = process.StandardError.ReadToEnd();
+                        string error = process.StandardOutput.ReadToEnd();
                         return BadRequest(new { Message = "Download failed", Error = error });
                     }
                 }
