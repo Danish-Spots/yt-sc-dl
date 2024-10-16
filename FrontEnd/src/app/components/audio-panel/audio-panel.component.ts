@@ -17,6 +17,17 @@ import { filter, tap } from 'rxjs';
 export class AudioPanelComponent implements OnInit {
   FormControl = new FormControl('', [this.verifyUrl]);
 
+  audioFormats = [
+    'best',
+    'aac',
+    'alac',
+    'flac',
+    'm4a',
+    'mp3',
+    'opus',
+    'vorbis',
+    'wav',
+  ];
   ngOnInit(): void {
     this.FormControl.statusChanges
       .pipe(

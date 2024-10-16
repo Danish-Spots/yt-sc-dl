@@ -2,14 +2,44 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
+    /// <summary>
+    /// Api endpoint to get version of yt-dlp installed
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class DownloadController : ControllerBase
     {
+        private string command ="/opt/venv/bin/yt-dlp";
+
         [HttpGet("status")]
         public IActionResult StatusCheck()
         {
-            return Ok(new {Message = "Api works"});
+            string arguments = "--version";
+
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+               FileName = command,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+
+            };
+
+            try 
+            {
+                using(Process process = Process.Start(psi))
+                {
+                    string result = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    return Ok(new {CommandVersion = result});
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { Message = "Server error", Error = e.Message });
+            }
         }
 
         [HttpPost("download-audio")]
@@ -22,7 +52,6 @@ using System.IO;
             string outputFilePath = Path.Combine(outputDirectory, $"{Path.GetFileNameWithoutExtension(videoUrl)}.mp3");
 
             // yt-dlp command and arguments
-            string command = "/opt/venv/bin/yt-dlp"; // Path to yt-dlp in the virtual environment
             string arguments = $"-x --audio-format mp3 -o \"{outputFilePath}\" {videoUrl}";
 
             // Start the process
