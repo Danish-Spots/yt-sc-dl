@@ -1,0 +1,25 @@
+<mat-toolbar class="toolbar">
+  <button
+    (click)="drawer.toggle()"
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button mat-button (click)="routeToHome()">My App</button>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+<mat-drawer-container class="drawer-container">
+  <mat-drawer #drawer mode="over" class="sidebar">
+    <div class="sidebar-content">
+      <button mat-flat-button (click)="routeToAudioDl(drawer)">
+        <mat-icon>music_note</mat-icon>
+        Youtube audio
+      </button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>
