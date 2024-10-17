@@ -75,10 +75,10 @@ export class AudioPanelComponent implements OnInit {
   }
 
   getData() {
-    if (!this.FormControl.value) return;
+    // if (!this.FormControl.value) return;
     this.loadingMetadata$.next(true);
     this.apiService
-      .GetMetadata(this.FormControl.value)
+      .GetMetadata('https://www.youtube.com/watch?v=Unetom7eYJ8')
       .pipe(
         catchError((err) => {
           this.loadingMetadata$.next(false);

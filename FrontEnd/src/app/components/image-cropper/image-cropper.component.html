@@ -1,7 +1,9 @@
-@if (_base64Image) {
-<div id="crop-container">
-  <img id="image" [src]="_base64Image" />
-</div>
+<div class="cropper-container"></div>
 
-<button (click)="cropImage()">Crop & Download</button>
-}
+<button mat-icon-button (click)="zoomIn()">
+  <mat-icon>zoom_in</mat-icon>
+</button>
+<button mat-icon-button (click)="zoomOut()">
+  <mat-icon>zoom_out</mat-icon>
+</button>
+<button mat-stroked-button (click)="cropImage()">Crop & Download</button>

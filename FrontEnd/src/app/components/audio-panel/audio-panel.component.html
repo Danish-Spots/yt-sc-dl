@@ -13,10 +13,10 @@
 <mat-progress-bar mode="query"></mat-progress-bar>
 } @else if(data) {
 <div class="data-container">
-  @if (data.thumbnail) {
+  @if (data.thumbnailUrl) {
   <div class="image-container">
     <!-- <img [ngSrc]="data.thumbnail" priority width="300" height="300" /> -->
-    <app-image-cropper [base64Image]="data.thumbnail"></app-image-cropper>
+    <app-image-cropper [base64Image]="data.thumbnailUrl"></app-image-cropper>
   </div>
   }
   <div>
