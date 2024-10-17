@@ -63,30 +63,15 @@ public class DownloadController : ControllerBase
         {
             using (Process process = Process.Start(psi))
             {
-
-
-                // object resultObj = JsonSerializer.Deserialize<object>(resultString);
                 string resultString = process.StandardOutput.ReadToEnd();
-                VideoDataJson resultObj = JsonSerializer.Deserialize<VideoDataJson>(resultString);
                 process.WaitForExit();
-                // string[] result = process.StandardOutput.ReadToEnd().Split("\n", StringSplitOptions.RemoveEmptyEntries);
-                // VideoDataResult resultObj = new VideoDataResult();
-                // resultObj.images = new List<ImageDto>();
-                // foreach (var item in result)
-                // {
-                //     // Hack for identifying title, thumbnails
-                //     if (item.Contains(".com"))
-                //     {
-                //         string[] imageData = item.Split([' '], StringSplitOptions.RemoveEmptyEntries);
-                //         resultObj.images.Add(new ImageDto(imageData[0].Trim(), imageData[1].Trim(), imageData[2].Trim(), imageData[3].Trim()));
-                //     }
-                //     else if (!item.Contains("ID"))
-                //     {
-                //         resultObj.title = item.Trim();
-                //     }
-                // }
 
-                return Ok(new { resultObj.thumbnail, resultObj.channel, resultObj.title });
+
+                VideoDataJson resultObj = JsonSerializer.Deserialize<VideoDataJson>(resultString);
+                string thumbnailUrl = resultObj.thumbnail;
+                string base64Thumbnail = FetchImageAsBase64(thumbnailUrl);
+
+                return Ok(new { thumbnailUrl = base64Thumbnail, resultObj.channel, resultObj.title });
             }
         }
         catch (Exception e)
@@ -141,6 +126,28 @@ public class DownloadController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, new { Message = "Server error", Error = ex.Message });
+        }
+    }
+
+    private string FetchImageAsBase64(string imageUrl)
+    {
+        try
+        {
+            using (var httpClient = new HttpClient())
+            {
+                // Fetch the image data from the URL
+                var imageBytes = httpClient.GetByteArrayAsync(imageUrl).Result;
+
+                // Convert the image to a base64-encoded string
+                string base64Image = Convert.ToBase64String(imageBytes);
+
+                // Return the base64 string with the appropriate data URL prefix
+                return $"data:image/jpeg;base64,{base64Image}";
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Failed to fetch or convert image from {imageUrl}: {e.Message}");
         }
     }
 }

@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,11 +12,14 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { filter, tap } from 'rxjs';
+import { BehaviorSubject, catchError, filter, tap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { JsonPipe } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { ImageCropperComponent } from '../image-cropper/image-cropper.component';
 
 @Component({
   selector: 'app-audio-panel',
@@ -31,12 +34,16 @@ import { JsonPipe } from '@angular/common';
     MatIconModule,
     JsonPipe,
     NgOptimizedImage,
+    AsyncPipe,
+    MatProgressBarModule,
+    MatSelectModule,
+    ImageCropperComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AudioPanelComponent implements OnInit {
   FormControl = new FormControl('', [this.verifyUrl]);
-
+  loadingMetadata$ = new BehaviorSubject(false);
   audioFormats = [
     'best',
     'aac',
@@ -68,9 +75,19 @@ export class AudioPanelComponent implements OnInit {
   }
 
   getData() {
-    if (this.FormControl.value)
-      this.apiService.GetMetadata(this.FormControl.value).subscribe((val) => {
+    if (!this.FormControl.value) return;
+    this.loadingMetadata$.next(true);
+    this.apiService
+      .GetMetadata(this.FormControl.value)
+      .pipe(
+        catchError((err) => {
+          this.loadingMetadata$.next(false);
+          return err;
+        })
+      )
+      .subscribe((val) => {
         this.data = val;
+        this.loadingMetadata$.next(false);
         this.cdRef.markForCheck();
       });
   }

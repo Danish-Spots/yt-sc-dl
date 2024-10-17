@@ -7,13 +7,35 @@
     }
   </mat-form-field>
 
-  <button mat-fab (click)="getData()"><mat-icon>download</mat-icon></button>
+  <button mat-stroked-button (click)="getData()">Fetch data</button>
 </div>
-<div>
-  title: {{ data?.title }}
-  <br />
-  channel: {{ data?.channel }}
+@if (loadingMetadata$ | async) {
+<mat-progress-bar mode="query"></mat-progress-bar>
+} @else if(data) {
+<div class="data-container">
+  @if (data.thumbnail) {
   <div class="image-container">
-    <img [ngSrc]="data?.thumbnail" priority fill />
+    <!-- <img [ngSrc]="data.thumbnail" priority width="300" height="300" /> -->
+    <app-image-cropper [base64Image]="data.thumbnail"></app-image-cropper>
   </div>
+  }
+  <div>
+    <span class="headline-large">
+      {{ data.title }}
+    </span>
+    <br />
+    <span class="headline-medium">
+      {{ data.channel }}
+    </span>
+  </div>
+  <mat-form-field>
+    <mat-label>Audio formats</mat-label>
+    <mat-select>
+      @for (format of audioFormats; track $index) {
+      <mat-option [value]="format">{{ format }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button mat-flat-button>Download</button>
 </div>
+}
