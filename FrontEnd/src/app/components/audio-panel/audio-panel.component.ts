@@ -60,17 +60,7 @@ import { saveAs } from 'file-saver';
 export class AudioPanelComponent implements OnInit {
   FormControl = new FormControl('', [this.verifyUrl]);
   loadingMetadata$ = new BehaviorSubject(false);
-  audioFormats = [
-    'best',
-    'aac',
-    'alac',
-    'flac',
-    'm4a',
-    'mp3',
-    'opus',
-    'vorbis',
-    'wav',
-  ];
+  audioFormats = ['best', 'flac', 'm4a', 'mp3', 'opus', 'vorbis', 'wav'];
 
   fileExtension: string = 'best';
 
