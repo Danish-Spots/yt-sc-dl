@@ -1,0 +1,11 @@
+<div class="input-container">
+  <mat-form-field class="input-field" appearance="outline">
+    <mat-label>Url</mat-label>
+    <input matInput [formControl]="urlControl" />
+    @if (urlControl.hasError('InvalidUrl')) {
+    <mat-error>Invalid youtube url</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="getData()">Fetch data</button>
+</div>

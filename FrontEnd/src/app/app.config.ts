@@ -8,6 +8,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { provideState, provideStore } from '@ngrx/store';
+import { YOUTUBE_STATE_KEY } from './store/youtube-state/youtube.selectors';
+import { youtubeReducer } from './store/youtube-state/youtube.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideStore(),
+    provideState(YOUTUBE_STATE_KEY, youtubeReducer),
   ],
 };
