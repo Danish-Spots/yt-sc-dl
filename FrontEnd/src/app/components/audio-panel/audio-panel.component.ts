@@ -95,10 +95,10 @@ export class AudioPanelComponent implements OnInit {
   }
 
   getData() {
-    // if (!this.FormControl.value) return;
+    if (!this.FormControl.value) return;
     this.loadingMetadata$.next(true);
     this.apiService
-      .GetMetadata('https://www.youtube.com/watch?v=Unetom7eYJ8')
+      .GetMetadata(this.FormControl.value)
       .pipe(
         catchError((err) => {
           this.loadingMetadata$.next(false);
@@ -113,13 +113,15 @@ export class AudioPanelComponent implements OnInit {
   }
 
   download() {
+    if (!this.FormControl.value) return;
+    const url = this.FormControl.value;
     defer(() => from(this.imageCropper.cropImage() ?? of()))
       .pipe(
         tap((val) => console.log(val)),
         first((val) => !!val),
         switchMap((val) => {
           return this.apiService.DownloadAudio(
-            'https://www.youtube.com/watch?v=Unetom7eYJ8',
+            url,
             this.data.title,
             this.data.channel,
             this.fileExtension,
