@@ -114,9 +114,6 @@ public class DownloadController : ControllerBase
                 using (Process process = Process.Start(psi))
                 {
                     process.WaitForExit();
-                    Console.WriteLine(process.ExitCode);
-                    Console.WriteLine(System.IO.File.Exists(outputFilePath));
-                    Console.WriteLine(outputFilePath);
                     if (process.ExitCode == 0 && System.IO.File.Exists(outputFilePathWithExtension))
                     {
 
