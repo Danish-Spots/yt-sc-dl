@@ -15,8 +15,10 @@
 <div class="data-container">
   @if (data.thumbnailUrl) {
   <div class="image-container">
-    <!-- <img [ngSrc]="data.thumbnail" priority width="300" height="300" /> -->
-    <app-image-cropper [base64Image]="data.thumbnailUrl"></app-image-cropper>
+    <app-image-cropper
+      #imageCropper
+      [base64Image]="data.thumbnailUrl"
+    ></app-image-cropper>
   </div>
   }
   <div>
@@ -30,12 +32,12 @@
   </div>
   <mat-form-field>
     <mat-label>Audio formats</mat-label>
-    <mat-select>
+    <mat-select [(ngModel)]="fileExtension">
       @for (format of audioFormats; track $index) {
       <mat-option [value]="format">{{ format }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <button mat-flat-button>Download</button>
+  <button mat-flat-button (click)="download()">Download</button>
 </div>
 }

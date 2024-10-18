@@ -81,13 +81,7 @@ export class ImageCropperComponent {
   }
 
   cropImage() {
-    this.cropperSelection
-      ?.$toCanvas({ width: 800, height: 800 })
-      .then((val: HTMLCanvasElement) => {
-        val.toBlob((blob: Blob | null) => {
-          if (blob) saveAs(blob, 'image.png');
-        });
-      });
+    return this.cropperSelection?.$toCanvas({ width: 800, height: 800 });
   }
 
   zoomOut() {

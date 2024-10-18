@@ -3,16 +3,30 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
+  FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BehaviorSubject, catchError, filter, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  defer,
+  filter,
+  first,
+  from,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +34,7 @@ import { JsonPipe } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ImageCropperComponent } from '../image-cropper/image-cropper.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-audio-panel',
@@ -29,6 +44,7 @@ import { ImageCropperComponent } from '../image-cropper/image-cropper.component'
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
@@ -56,7 +72,11 @@ export class AudioPanelComponent implements OnInit {
     'wav',
   ];
 
+  fileExtension: string = 'best';
+
   data!: any;
+
+  @ViewChild('imageCropper') imageCropper!: ImageCropperComponent;
 
   constructor(
     private apiService: ApiService,
@@ -90,6 +110,27 @@ export class AudioPanelComponent implements OnInit {
         this.loadingMetadata$.next(false);
         this.cdRef.markForCheck();
       });
+  }
+
+  download() {
+    defer(() => from(this.imageCropper.cropImage() ?? of()))
+      .pipe(
+        tap((val) => console.log(val)),
+        first((val) => !!val),
+        switchMap((val) => {
+          return this.apiService.DownloadAudio(
+            'https://www.youtube.com/watch?v=Unetom7eYJ8',
+            this.data.title,
+            this.data.channel,
+            this.fileExtension,
+            val.toDataURL()
+          );
+        }),
+        map((file: Blob) => {
+          saveAs(file);
+        })
+      )
+      .subscribe();
   }
 
   private verifyUrl(control: AbstractControl) {
