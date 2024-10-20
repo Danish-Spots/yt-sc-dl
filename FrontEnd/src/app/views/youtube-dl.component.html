@@ -1,3 +1,11 @@
 <app-stepper>
-  <app-youtube-url ngProjectAs="urlSection"></app-youtube-url>
+  <app-fetch ngProjectAs="urlSection">
+    <app-youtube-url ngProjectAs="urlField"></app-youtube-url>
+    <app-loading
+      ngProjectAs="dataVisualisation"
+      [loadingState]="loading$ | async"
+    >
+      <app-youtube-data></app-youtube-data>
+    </app-loading>
+  </app-fetch>
 </app-stepper>

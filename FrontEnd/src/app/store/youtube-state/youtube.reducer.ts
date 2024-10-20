@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialYoutubeState, YoutubeState } from './youtube.state';
 import { YoutubeActions } from './youtube.actions';
+import { LoadingEnum } from '../../enums/loading.enum';
 
 export const youtubeReducer = createReducer(
   initialYoutubeState,
@@ -10,16 +11,16 @@ export const youtubeReducer = createReducer(
       ...state,
       url,
       data: null,
-      loadingData: true,
+      loadingData: LoadingEnum.loading,
     })
   ),
   on(YoutubeActions.setData, (state: YoutubeState, { data }) => ({
     ...state,
     data,
-    loadingData: false,
+    loadingData: LoadingEnum.loaded,
   })),
   on(YoutubeActions.errorFetchingData, (state: YoutubeState) => ({
     ...state,
-    loadingData: false,
+    loadingData: LoadingEnum.notLoaded,
   }))
 );

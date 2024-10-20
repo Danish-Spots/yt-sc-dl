@@ -1,0 +1,13 @@
+.data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .image-container {
+    position: relative;
+    border-radius: 12px;
+    img {
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+}

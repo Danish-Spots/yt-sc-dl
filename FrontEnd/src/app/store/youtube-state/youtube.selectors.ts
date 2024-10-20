@@ -15,3 +15,7 @@ export const selectLoadingData = createSelector(
   selectYoutubeState,
   (state) => state.loadingData
 );
+export const selectData = createSelector(
+  selectYoutubeState,
+  (state) => state.data
+);
