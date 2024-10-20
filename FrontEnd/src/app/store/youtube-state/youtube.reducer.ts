@@ -22,5 +22,19 @@ export const youtubeReducer = createReducer(
   on(YoutubeActions.errorFetchingData, (state: YoutubeState) => ({
     ...state,
     loadingData: LoadingEnum.notLoaded,
+  })),
+  on(YoutubeActions.setCroppedImage, (state, { imageString }) => ({
+    ...state,
+    metadata: {
+      ...state.metadata,
+      image: imageString,
+    },
+  })),
+  on(YoutubeActions.setMetadata, (state, { metadata }) => ({
+    ...state,
+    metadata: {
+      ...state.metadata,
+      ...metadata,
+    },
   }))
 );

@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { JsonPipe } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { ImageCropperComponent } from '../image-cropper/image-cropper.component';
+import { ImageCropperComponent } from '../pure/image-cropper/image-cropper.component';
 import { saveAs } from 'file-saver';
 
 @Component({

@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { YoutubeState } from './youtube.state';
+import { Metadata } from '../../view-models/metadata';
 
 export const YOUTUBE_STATE_KEY = 'youtube-state';
 
@@ -18,4 +19,18 @@ export const selectLoadingData = createSelector(
 export const selectData = createSelector(
   selectYoutubeState,
   (state) => state.data
+);
+
+export const selectThumbnail = createSelector(
+  selectData,
+  (state) => state?.image
+);
+
+export const selectInitialMetadata = createSelector(
+  selectData,
+  (state): Omit<Metadata, 'image'> => ({
+    title: state?.title,
+    album: state?.title,
+    artist: state?.artist,
+  })
 );

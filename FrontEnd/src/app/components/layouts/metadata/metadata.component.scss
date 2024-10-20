@@ -1,0 +1,9 @@
+.metadata {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+
+  @media (max-width: 1365px) {
+    flex-direction: column-reverse;
+  }
+}

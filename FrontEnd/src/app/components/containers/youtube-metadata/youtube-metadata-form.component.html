@@ -1,0 +1,4 @@
+<app-metadata-form
+  [metadata]="initialMetadata$ | async"
+  (formChanges)="updateMetadata($event)"
+></app-metadata-form>

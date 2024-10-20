@@ -1,22 +1,14 @@
-import { M } from '@angular/cdk/keycodes';
 import {
   Component,
   Input,
-  AfterViewInit,
-  ChangeDetectorRef,
-  ViewChild,
   ChangeDetectionStrategy,
-  ElementRef,
-  CUSTOM_ELEMENTS_SCHEMA,
-  viewChild,
+  Output,
+  EventEmitter,
 } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSliderModule } from '@angular/material/slider';
 import 'cropperjs';
 import Cropper, { CropperImage, CropperSelection } from 'cropperjs';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-image-cropper',
@@ -41,9 +33,9 @@ export class ImageCropperComponent {
     }
   }
 
-  _base64Image!: string;
+  @Output() imageCroppedEvent = new EventEmitter<string>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  _base64Image!: string;
 
   initializeCropper() {
     const image = new Image();
@@ -77,9 +69,17 @@ export class ImageCropperComponent {
         );
 
         this.cropperSelection?.$center();
+
+        document
+          .querySelector('#image-cropper')
+          ?.addEventListener('transform', this.handleTransform());
       });
   }
 
+  /**
+   * This function needs to be implemented on the parent
+   * @returns
+   */
   cropImage() {
     return this.cropperSelection?.$toCanvas({ width: 800, height: 800 });
   }
@@ -90,12 +90,35 @@ export class ImageCropperComponent {
   zoomIn() {
     this.cropperImage?.$zoom(0.05);
   }
+
+  outputCrop() {
+    const canvas = this.cropImage();
+    canvas?.then((value) => {
+      this.imageCroppedEvent.emit(value.toDataURL());
+    });
+  }
+
+  handleTransform() {
+    let time = 1000;
+    let timeout: undefined | any; // NodeJS.Timeout
+    return () => {
+      const later = () => {
+        timeout = undefined;
+        this.outputCrop();
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, time);
+      if (!timeout) this.outputCrop();
+    };
+  }
 }
 
 const cropperTemplate = `
 <cropper-canvas background style="width: 500px; height: 500px">
   <cropper-image
     #cropper
+    id="image-cropper"
     [src]="_base64Image"
     initial-center-size="cover"
     alt="Picture"

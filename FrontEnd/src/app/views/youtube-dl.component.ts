@@ -6,6 +6,9 @@ import { LoadingComponent } from '../components/pure/loading/loading.component';
 import { YoutubeDataComponent } from '../components/containers/youtube-data/youtube-data.component';
 import { YoutubeFacade } from '../facades/yt-store.facade';
 import { AsyncPipe } from '@angular/common';
+import { MetadataComponent } from '../components/layouts/metadata/metadata.component';
+import { YoutubeImageCropperComponent } from '../components/containers/youtube-image-cropper/youtube-image-cropper.component';
+import { YoutubeMetadataFormComponent } from '../components/containers/youtube-metadata/youtube-metadata-form.component';
 
 @Component({
   selector: 'app-youtube-dl',
@@ -19,6 +22,9 @@ import { AsyncPipe } from '@angular/common';
     LoadingComponent,
     YoutubeDataComponent,
     AsyncPipe,
+    MetadataComponent,
+    YoutubeImageCropperComponent,
+    YoutubeMetadataFormComponent,
   ],
 })
 export class YoutubeDlComponent {

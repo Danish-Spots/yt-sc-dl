@@ -1,0 +1,6 @@
+@if (thumbnail$ | async; as thumbnail) {
+<app-image-cropper
+  [base64Image]="thumbnail"
+  (imageCroppedEvent)="handleImageCroppedEvent($event)"
+></app-image-cropper>
+}

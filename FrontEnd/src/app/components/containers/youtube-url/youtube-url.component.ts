@@ -21,6 +21,7 @@ export class YoutubeUrlComponent {
     // handle url emission (probably store in state)
     if (!url) return;
 
-    this.youtubeFacade.setUrl(url);
+    this.youtubeFacade.setUrl('https://www.youtube.com/watch?v=ET5X4voZsag');
+    // this.youtubeFacade.setUrl(url);
   }
 }
