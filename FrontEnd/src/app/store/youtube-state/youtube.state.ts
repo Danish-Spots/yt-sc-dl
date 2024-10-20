@@ -7,6 +7,7 @@ export interface YoutubeState {
   data: UrlData | null;
   loadingData: LoadingEnum;
   metadata: Metadata;
+  selectedFormat?: string;
 }
 
 export const initialYoutubeState: YoutubeState = {

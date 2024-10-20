@@ -1,17 +1,3 @@
-:host {
-  margin: 32px;
-  display: flex;
-  flex-direction: column;
-
-  .input-container {
-    display: flex;
-    flex-direction: row;
-    .input-field {
-      flex: 1;
-      margin-right: 16px;
-    }
-  }
-}
 .data-container {
   display: flex;
   flex-direction: column;

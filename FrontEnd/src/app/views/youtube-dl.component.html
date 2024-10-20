@@ -17,4 +17,14 @@
       ngProjectAs="metadataForm"
     ></app-youtube-metadata-form>
   </app-metadata>
+
+  <app-download ngProjectAs="downloadSection">
+    <app-youtube-format-selector
+      ngProjectAs="formatSelector"
+    ></app-youtube-format-selector>
+    <app-youtube-preview ngProjectAs="preview"></app-youtube-preview>
+    <app-youtube-download-button
+      ngProjectAs="downloadButton"
+    ></app-youtube-download-button>
+  </app-download>
 </app-stepper>

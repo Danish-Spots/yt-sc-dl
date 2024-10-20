@@ -34,3 +34,8 @@ export const selectInitialMetadata = createSelector(
     artist: state?.artist,
   })
 );
+
+export const selectMetadata = createSelector(
+  selectYoutubeState,
+  (state) => state.metadata
+);

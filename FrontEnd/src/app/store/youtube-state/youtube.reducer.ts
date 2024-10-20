@@ -36,5 +36,9 @@ export const youtubeReducer = createReducer(
       ...state.metadata,
       ...metadata,
     },
+  })),
+  on(YoutubeActions.setFormat, (state, { format }) => ({
+    ...state,
+    selectedFormat: format,
   }))
 );

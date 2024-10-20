@@ -5,6 +5,7 @@ import {
   selectData,
   selectInitialMetadata,
   selectLoadingData,
+  selectMetadata,
   selectThumbnail,
 } from '../store/youtube-state/youtube.selectors';
 import { Metadata } from '../view-models/metadata';
@@ -18,6 +19,7 @@ export class YoutubeFacade {
   ytDataLoading$ = this.store.select(selectLoadingData);
   ytThumbnail$ = this.store.select(selectThumbnail);
   ytMetadata$ = this.store.select(selectInitialMetadata);
+  ytPreview$ = this.store.select(selectMetadata);
 
   setUrl(url: string): void {
     // Remove playlist from url\
@@ -33,5 +35,9 @@ export class YoutubeFacade {
 
   setMetadata(metadata: Omit<Metadata, 'image'>) {
     this.store.dispatch(YoutubeActions.setMetadata({ metadata }));
+  }
+
+  setFormat(format: string) {
+    this.store.dispatch(YoutubeActions.setFormat({ format }));
   }
 }

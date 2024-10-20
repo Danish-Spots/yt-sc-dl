@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline">
+  <mat-label>Audio formats</mat-label>
+  <mat-select [ngModel]="selectedFormat" (ngModelChange)="formatChange($event)">
+    @for (format of _formats; track $index) {
+    <mat-option [value]="format">{{ format }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
