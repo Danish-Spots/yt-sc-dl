@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   provideExperimentalZonelessChangeDetection,
   provideZoneChangeDetection,
+  isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -11,6 +12,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { YOUTUBE_STATE_KEY } from './store/youtube-state/youtube.selectors';
 import { youtubeReducer } from './store/youtube-state/youtube.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { YoutubeEffects } from './store/youtube-state/youtube.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore(),
     provideState(YOUTUBE_STATE_KEY, youtubeReducer),
+    provideEffects(YoutubeEffects),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

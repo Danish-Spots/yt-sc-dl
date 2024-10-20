@@ -8,10 +8,18 @@ export const youtubeReducer = createReducer(
     YoutubeActions.setUrl,
     (state: YoutubeState, { url }: { url: string }): YoutubeState => ({
       ...state,
-      url: (() => {
-        console.log(url);
-        return url;
-      })(),
+      url,
+      data: null,
+      loadingData: true,
     })
-  )
+  ),
+  on(YoutubeActions.setData, (state: YoutubeState, { data }) => ({
+    ...state,
+    data,
+    loadingData: false,
+  })),
+  on(YoutubeActions.errorFetchingData, (state: YoutubeState) => ({
+    ...state,
+    loadingData: false,
+  }))
 );

@@ -10,3 +10,8 @@ export const selectUrl = createSelector(
   selectYoutubeState,
   (state) => state.url
 );
+
+export const selectLoadingData = createSelector(
+  selectYoutubeState,
+  (state) => state.loadingData
+);

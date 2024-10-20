@@ -22,13 +22,15 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class UrlComponent {
-  @Input({ required: true }) allowedUrlsRegex!: RegExp;
+  @Input({ required: true }) set allowedUrlsRegex(allowedUrlsRegex: RegExp) {
+    this.urlControl.addValidators(this.verifyUrl(allowedUrlsRegex));
+  }
 
   @Output() emitUrl = new EventEmitter<string>();
 
-  urlControl = new FormControl('', [this.verifyUrl(this.allowedUrlsRegex)]);
+  urlControl = new FormControl('', []);
 
-  getData(): void {
+  fetchDataClicked(): void {
     if (this.urlControl.invalid) return;
 
     this.emitUrl.emit(this.urlControl.value ?? undefined);
