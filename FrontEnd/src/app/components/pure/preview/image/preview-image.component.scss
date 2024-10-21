@@ -1,0 +1,9 @@
+.image-container {
+  position: relative;
+  border-radius: 12px;
+  img {
+    object-fit: contain;
+    border: 1px solid lightgray;
+    border-radius: inherit;
+  }
+}

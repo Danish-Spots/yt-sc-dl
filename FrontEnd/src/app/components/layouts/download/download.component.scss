@@ -1,0 +1,12 @@
+.content-container {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  @media (max-width: 1365px) {
+    flex-direction: column-reverse;
+  }
+  .data-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

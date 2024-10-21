@@ -21,9 +21,19 @@
     <app-youtube-format-selector
       ngProjectAs="formatSelector"
     ></app-youtube-format-selector>
-    <app-youtube-preview ngProjectAs="preview"></app-youtube-preview>
+    <app-youtube-preview-image
+      ngProjectAs="previewImage"
+    ></app-youtube-preview-image>
+    <app-youtube-preview-data
+      ngProjectAs="previewData"
+    ></app-youtube-preview-data>
     <app-youtube-download-button
       ngProjectAs="downloadButton"
     ></app-youtube-download-button>
+    <app-loading
+      class="downloading-query"
+      ngProjectAs="downloadingQuery"
+      [loadingState]="downloading$ | async"
+    ></app-loading>
   </app-download>
 </app-stepper>

@@ -5,9 +5,12 @@ import {
   selectData,
   selectHideSteps,
   selectInitialMetadata,
+  selectIsDownloading,
   selectLoadingData,
   selectMetadata,
   selectPreviewData,
+  selectPreviewDataData,
+  selectPreviewDataImage,
   selectThumbnail,
 } from '../store/youtube-state/youtube.selectors';
 import { Metadata } from '../view-models/metadata';
@@ -21,8 +24,10 @@ export class YoutubeFacade {
   ytDataLoading$ = this.store.select(selectLoadingData);
   ytThumbnail$ = this.store.select(selectThumbnail);
   ytMetadata$ = this.store.select(selectInitialMetadata);
-  ytPreview$ = this.store.select(selectPreviewData);
+  ytPreviewData$ = this.store.select(selectPreviewDataData);
+  ytPreviewImage$ = this.store.select(selectPreviewDataImage);
   ytHideSteps$ = this.store.select(selectHideSteps);
+  ytDownloading$ = this.store.select(selectIsDownloading);
 
   setUrl(url: string): void {
     // Remove playlist from url\

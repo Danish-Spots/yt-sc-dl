@@ -21,10 +21,13 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.headline-large {
+.headline-small {
+  @include getFont(headline-small);
+}
+.title-large {
   @include getFont(title-large);
 }
-.headline-medium {
+.title-medium {
   @include getFont(title-medium);
 }
 

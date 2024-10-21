@@ -57,6 +57,15 @@ export const selectPreviewData = createSelector(
   })
 );
 
+export const selectPreviewDataData = createSelector(
+  selectPreviewData,
+  ({ title, album, artist }) => ({ title, album, artist })
+);
+export const selectPreviewDataImage = createSelector(
+  selectPreviewData,
+  (data) => data.image
+);
+
 export const selectFormat = createSelector(
   selectYoutubeState,
   (state) => state.selectedFormat
@@ -71,4 +80,18 @@ export const selectDownloadData = createSelector(
     metadata,
     format,
   })
+);
+
+export const selectDownloading = createSelector(
+  selectYoutubeState,
+  (state) => state.downloadingFile
+);
+
+export const selectIsDownloading = createSelector(
+  selectLoadingData,
+  selectDownloading,
+  (loadingData, downloading) =>
+    loadingData === LoadingEnum.loaded && downloading
+      ? LoadingEnum.loading
+      : LoadingEnum.notLoaded
 );

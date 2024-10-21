@@ -11,6 +11,8 @@ export const youtubeReducer = createReducer(
       ...state,
       url,
       data: null,
+      metadata: {},
+
       loadingData: LoadingEnum.loading,
     })
   ),

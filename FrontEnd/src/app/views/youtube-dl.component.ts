@@ -11,9 +11,10 @@ import { YoutubeImageCropperComponent } from '../components/containers/youtube-i
 import { YoutubeMetadataFormComponent } from '../components/containers/youtube-metadata-form/youtube-metadata-form.component';
 import { DownloadComponent } from '../components/layouts/download/download.component';
 import { YoutubeFormatSelector } from '../components/containers/youtube-format-selector/youtube-format-selector.component';
-import { YoutubePreviewComponent } from '../components/containers/youtube-preview/youtube-preview.component';
+import { YoutubePreviewImageComponent } from '../components/containers/youtube-preview/image/youtube-preview-image.component';
 import { YoutubeDownloadButtonComponent } from '../components/containers/youtube-download-button/youtube-download-button.component';
 import { NoDataComponent } from '../components/pure/no-data/no-data.component';
+import { YoutubePreviewDataComponent } from '../components/containers/youtube-preview/data/youtube-preview-data.component';
 
 @Component({
   selector: 'app-youtube-dl',
@@ -32,13 +33,15 @@ import { NoDataComponent } from '../components/pure/no-data/no-data.component';
     YoutubeMetadataFormComponent,
     DownloadComponent,
     YoutubeFormatSelector,
-    YoutubePreviewComponent,
     YoutubeDownloadButtonComponent,
     NoDataComponent,
+    YoutubePreviewImageComponent,
+    YoutubePreviewDataComponent,
   ],
 })
 export class YoutubeDlComponent {
   ytFacade = inject(YoutubeFacade);
   loadingState$ = this.ytFacade.ytDataLoading$;
   hideSteps$ = this.ytFacade.ytHideSteps$;
+  downloading$ = this.ytFacade.ytDownloading$;
 }

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-download-button',
   templateUrl: './download-button.component.html',
+  styleUrl: './download-button.component.scss',
   standalone: true,
   imports: [MatButtonModule],
 })
