@@ -19,7 +19,7 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
-# Step 2: Install dependencies
+# Step 1: Install dependencies including OpenSSL
 RUN apt-get update && \
     apt-get install -y \
     python3 \
@@ -27,12 +27,15 @@ RUN apt-get update && \
     ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 
-# Step 3: Create a virtual environment and install yt-dlp
+# Step 2: Create a virtual environment and install yt-dlp
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/pip install yt-dlp
-    
-# Copy the published app from the build stage
+# Step 4: Copy the published app from the build stage
 COPY --from=build /app/publish .
+
+# Step 5: Configure ASP.NET Core to use the generated certificate
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https-certs/https.crt
+ENV ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https-certs/https.key
 
 # Expose ports if needed (80 for HTTP, 443 for HTTPS)
 EXPOSE 80
