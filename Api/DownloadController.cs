@@ -129,7 +129,7 @@ public class DownloadController : ControllerBase
 
                         using (var tagFile = TagLib.File.Create(outputFilePathWithExtension))
                         {
-                            tagFile.Tag.Album = request.title;
+                            tagFile.Tag.Album = request.album;
                             tagFile.Tag.Title = request.title;
                             tagFile.Tag.AlbumArtists = [request.channel];
 
@@ -208,6 +208,7 @@ public class DownloadRequest
 {
     public string VideoUrl { get; set; }
     public string title { get; set; }
+    public string album {get;set;}
     public string channel {get; set;}
     public string image {get; set;}
     public string fileExtension {get; set;}
