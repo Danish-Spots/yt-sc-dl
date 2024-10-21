@@ -14,14 +14,12 @@ import { YoutubeFacade } from '../../../facades/yt-store.facade';
 export class YoutubeUrlComponent {
   youtubeRegex =
     /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?|shorts)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
-
+  cleanYtUrlRegex = /&list=[A-Za-z0-9&_=]*/g;
   constructor(private youtubeFacade: YoutubeFacade) {}
 
   setUrl(url: string | undefined): void {
-    // handle url emission (probably store in state)
     if (!url) return;
 
-    this.youtubeFacade.setUrl('https://www.youtube.com/watch?v=ET5X4voZsag');
-    // this.youtubeFacade.setUrl(url);
+    this.youtubeFacade.setUrl(url.replace(this.cleanYtUrlRegex, ''));
   }
 }

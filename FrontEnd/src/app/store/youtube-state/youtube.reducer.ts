@@ -40,5 +40,18 @@ export const youtubeReducer = createReducer(
   on(YoutubeActions.setFormat, (state, { format }) => ({
     ...state,
     selectedFormat: format,
-  }))
+  })),
+  on(YoutubeActions.downloadAudio, (state) => ({
+    ...state,
+    downloadingFile: true,
+  })),
+  on(
+    YoutubeActions.downloadError,
+    YoutubeActions.downloadErrorDataPassedIncorrectly,
+    (state) => ({
+      ...state,
+      downloadingFile: false,
+    })
+  ),
+  on(YoutubeActions.downloadSuccess, (state) => initialYoutubeState)
 );

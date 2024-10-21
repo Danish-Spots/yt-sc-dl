@@ -8,6 +8,8 @@ export interface YoutubeState {
   loadingData: LoadingEnum;
   metadata: Metadata;
   selectedFormat?: string;
+
+  downloadingFile: boolean;
 }
 
 export const initialYoutubeState: YoutubeState = {
@@ -15,4 +17,6 @@ export const initialYoutubeState: YoutubeState = {
   data: null,
   loadingData: LoadingEnum.notLoaded,
   metadata: {},
+
+  downloadingFile: false,
 };

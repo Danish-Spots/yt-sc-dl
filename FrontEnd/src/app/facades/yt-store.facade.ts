@@ -3,9 +3,11 @@ import { Store } from '@ngrx/store';
 import { YoutubeActions } from '../store/youtube-state/youtube.actions';
 import {
   selectData,
+  selectHideSteps,
   selectInitialMetadata,
   selectLoadingData,
   selectMetadata,
+  selectPreviewData,
   selectThumbnail,
 } from '../store/youtube-state/youtube.selectors';
 import { Metadata } from '../view-models/metadata';
@@ -19,7 +21,8 @@ export class YoutubeFacade {
   ytDataLoading$ = this.store.select(selectLoadingData);
   ytThumbnail$ = this.store.select(selectThumbnail);
   ytMetadata$ = this.store.select(selectInitialMetadata);
-  ytPreview$ = this.store.select(selectMetadata);
+  ytPreview$ = this.store.select(selectPreviewData);
+  ytHideSteps$ = this.store.select(selectHideSteps);
 
   setUrl(url: string): void {
     // Remove playlist from url\
@@ -39,5 +42,9 @@ export class YoutubeFacade {
 
   setFormat(format: string) {
     this.store.dispatch(YoutubeActions.setFormat({ format }));
+  }
+
+  download() {
+    this.store.dispatch(YoutubeActions.downloadAudio());
   }
 }

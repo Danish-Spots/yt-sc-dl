@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { YoutubeState } from './youtube.state';
 import { Metadata } from '../../view-models/metadata';
+import { LoadingEnum } from '../../enums/loading.enum';
 
 export const YOUTUBE_STATE_KEY = 'youtube-state';
 
@@ -15,6 +16,11 @@ export const selectUrl = createSelector(
 export const selectLoadingData = createSelector(
   selectYoutubeState,
   (state) => state.loadingData
+);
+
+export const selectHideSteps = createSelector(
+  selectLoadingData,
+  (loading) => loading !== LoadingEnum.loaded
 );
 export const selectData = createSelector(
   selectYoutubeState,
@@ -38,4 +44,31 @@ export const selectInitialMetadata = createSelector(
 export const selectMetadata = createSelector(
   selectYoutubeState,
   (state) => state.metadata
+);
+
+export const selectPreviewData = createSelector(
+  selectMetadata,
+  selectData,
+  (metadata, data) => ({
+    image: metadata.image ?? data?.image,
+    artist: metadata.artist ?? data?.artist,
+    album: metadata.album ?? data?.title,
+    title: metadata.title ?? data?.title,
+  })
+);
+
+export const selectFormat = createSelector(
+  selectYoutubeState,
+  (state) => state.selectedFormat
+);
+
+export const selectDownloadData = createSelector(
+  selectUrl,
+  selectPreviewData,
+  selectFormat,
+  (url, metadata, format) => ({
+    url,
+    metadata,
+    format,
+  })
 );

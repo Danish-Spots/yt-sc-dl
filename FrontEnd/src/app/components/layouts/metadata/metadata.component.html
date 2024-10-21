@@ -1,4 +1,8 @@
+@if (hideStep) {
+<app-no-data></app-no-data>
+} @else {
 <div class="metadata">
   <ng-content select="imageCropper"></ng-content>
   <ng-content select="metadataForm"></ng-content>
 </div>
+}

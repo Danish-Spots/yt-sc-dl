@@ -13,6 +13,7 @@ import { DownloadComponent } from '../components/layouts/download/download.compo
 import { YoutubeFormatSelector } from '../components/containers/youtube-format-selector/youtube-format-selector.component';
 import { YoutubePreviewComponent } from '../components/containers/youtube-preview/youtube-preview.component';
 import { YoutubeDownloadButtonComponent } from '../components/containers/youtube-download-button/youtube-download-button.component';
+import { NoDataComponent } from '../components/pure/no-data/no-data.component';
 
 @Component({
   selector: 'app-youtube-dl',
@@ -33,9 +34,11 @@ import { YoutubeDownloadButtonComponent } from '../components/containers/youtube
     YoutubeFormatSelector,
     YoutubePreviewComponent,
     YoutubeDownloadButtonComponent,
+    NoDataComponent,
   ],
 })
 export class YoutubeDlComponent {
   ytFacade = inject(YoutubeFacade);
-  loading$ = this.ytFacade.ytDataLoading$;
+  loadingState$ = this.ytFacade.ytDataLoading$;
+  hideSteps$ = this.ytFacade.ytHideSteps$;
 }

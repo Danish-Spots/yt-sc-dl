@@ -3,12 +3,12 @@
     <app-youtube-url ngProjectAs="urlField"></app-youtube-url>
     <app-loading
       ngProjectAs="dataVisualisation"
-      [loadingState]="loading$ | async"
+      [loadingState]="loadingState$ | async"
     >
       <app-youtube-data></app-youtube-data>
     </app-loading>
   </app-fetch>
-  <app-metadata ngProjectAs="metadataSection">
+  <app-metadata ngProjectAs="metadataSection" [hideStep]="hideSteps$ | async">
     <app-youtube-image-cropper
       ngProjectAs="imageCropper"
     ></app-youtube-image-cropper>
@@ -17,8 +17,7 @@
       ngProjectAs="metadataForm"
     ></app-youtube-metadata-form>
   </app-metadata>
-
-  <app-download ngProjectAs="downloadSection">
+  <app-download ngProjectAs="downloadSection" [hideStep]="hideSteps$ | async">
     <app-youtube-format-selector
       ngProjectAs="formatSelector"
     ></app-youtube-format-selector>
