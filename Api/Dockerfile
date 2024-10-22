@@ -34,8 +34,8 @@ RUN python3 -m venv /opt/venv && \
 COPY --from=build /app/publish .
 
 # Step 5: Configure ASP.NET Core to use the generated certificate
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https-certs/https.crt
-ENV ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https-certs/https.key
+# ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https-certs/https.crt
+# ENV ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https-certs/https.key
 
 # Expose ports if needed (80 for HTTP, 443 for HTTPS)
 EXPOSE 80

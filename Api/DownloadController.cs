@@ -48,7 +48,7 @@ public class DownloadController : ControllerBase
     [HttpPost("video-data")]
     public IActionResult GetVideoData([FromBody] VideoDataRequest request)
     {
-        string arguments = $"-j {request.VideoUrl}'";
+        string arguments = $"-j {request.VideoUrl}";
 
         ProcessStartInfo psi = new ProcessStartInfo
         {
@@ -212,23 +212,6 @@ public class DownloadRequest
     public string channel {get; set;}
     public string image {get; set;}
     public string fileExtension {get; set;}
-}
-
-public class ImageDto(string _ID, string _Width, string _Height, string _Url)
-{
-    // ID Width   Height  URL
-    public string ID { get; } = _ID;
-    public string Width { get; } = _Width;
-    public string Height { get; } = _Height;
-    public string Url { get; } = _Url;
-}
-
-
-public class VideoDataResult
-{
-    public string title { get; set; }
-    public List<ImageDto> images { get; set; }
-    public string id { get; set; }
 }
 
 public class VideoDataJson
