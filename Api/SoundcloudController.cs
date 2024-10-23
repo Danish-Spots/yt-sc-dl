@@ -72,11 +72,15 @@ public class SoundcloudController : ControllerBase
                 string resultString = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
 
-                ScMetadataDto resultObj = JsonSerializer.Deserialize<ScMetadataDto>(resultString);
-                string thumbnailUrl = resultObj.thumbnail;
-                resultObj.thumbnail = FetchImageAsBase64(thumbnailUrl);
-
-                return Ok(resultObj);
+                var resultObj = JsonSerializer.Deserialize<YtDlpMetadata>(resultString);
+                var thumbnails = resultObj.thumbnails.Select(t => t.url).ToList();
+                ScMetadataDto result = new ScMetadataDto{
+                    uploader = resultObj.uploader, 
+                    thumbnail = resultObj.thumbnail, 
+                    title = resultObj.title, 
+                    thumbnails = thumbnails
+                };
+                return Ok(result);
             }
         }
         catch (Exception e)
@@ -113,8 +117,13 @@ public class SoundcloudController : ControllerBase
                 process.WaitForExit();
                 if (process.ExitCode == 0 && System.IO.File.Exists(outputFilePathWithExtension))
                 {
+                    if (!Uri.IsWellFormedUriString(request.Thumbnail, UriKind.Absolute))
+                    {
+                        return BadRequest("Format is not a well formed URI");
+                    }
+                    string Image = FetchImageAsBase64(request.Thumbnail);
 
-                    var base64Data = request.Thumbnail;
+                    var base64Data = Image;
                     if (base64Data.Contains("base64,"))
                     {
                         base64Data = base64Data.Substring(base64Data.IndexOf("base64,") + 7); // Strip the prefix

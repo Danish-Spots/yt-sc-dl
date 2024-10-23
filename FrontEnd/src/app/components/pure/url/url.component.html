@@ -3,7 +3,7 @@
     <mat-label>Url</mat-label>
     <input matInput [formControl]="urlControl" />
     @if (urlControl.hasError('InvalidUrl')) {
-    <mat-error>Invalid youtube url</mat-error>
+    <mat-error>{{ errorText }}</mat-error>
     }
   </mat-form-field>
 

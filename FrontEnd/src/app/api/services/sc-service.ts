@@ -9,7 +9,7 @@ import { ScDownloadRequestDto } from '../models/sc-download-request-dto';
   providedIn: 'root',
 })
 export class ScService {
-  private baseUrl = 'https://localhost:4233/api/Soundcloud';
+  private baseUrl = 'http://localhost:4201/api/Soundcloud';
   constructor(private httpClient: HttpClient) {}
 
   public GetMetadata(url: string) {

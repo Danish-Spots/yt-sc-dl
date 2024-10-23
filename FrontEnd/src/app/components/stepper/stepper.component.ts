@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -10,4 +10,6 @@ import { MatStepperModule } from '@angular/material/stepper';
   standalone: true,
   imports: [MatStepperModule, MatIconModule, MatButtonModule],
 })
-export class StepperComponent {}
+export class StepperComponent {
+  @Input() firstStepLabel!: string;
+}

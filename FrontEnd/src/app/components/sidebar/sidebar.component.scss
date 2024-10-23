@@ -22,6 +22,7 @@ $theme: mat.define-theme(
     display: flex;
     flex-direction: column;
     padding: 16px;
+    gap: 8px;
   }
   .drawer-container {
     height: 100%;

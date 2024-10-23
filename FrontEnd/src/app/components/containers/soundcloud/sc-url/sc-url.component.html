@@ -1,0 +1,5 @@
+<app-url
+  [allowedUrlsRegex]="soundcloudRegex"
+  (emitUrl)="setUrl($event)"
+  errorText="Invalid soundcloud url"
+></app-url>

@@ -1,1 +1,5 @@
-<app-url [allowedUrlsRegex]="youtubeRegex" (emitUrl)="setUrl($event)"></app-url>
+<app-url
+  [allowedUrlsRegex]="youtubeRegex"
+  (emitUrl)="setUrl($event)"
+  errorText="Invalid youtube url"
+></app-url>

@@ -1,36 +1,26 @@
-<app-stepper>
+<app-stepper firstStepLabel="Input soundcloud url">
   <app-fetch ngProjectAs="urlSection">
-    <app-sc-image-picker ngProjectAs="urlField"></app-sc-image-picker>
-    <!-- <app-youtube-url ngProjectAs="urlField"></app-youtube-url> -->
+    <app-sc-url ngProjectAs="urlField"></app-sc-url>
     <app-loading
       ngProjectAs="dataVisualisation"
       [loadingState]="loadingState$ | async"
     >
-      <app-youtube-data></app-youtube-data>
+      <app-sc-data></app-sc-data>
     </app-loading>
   </app-fetch>
   <app-metadata ngProjectAs="metadataSection" [hideStep]="hideSteps$ | async">
-    <app-youtube-image-cropper
-      ngProjectAs="imageCropper"
-    ></app-youtube-image-cropper>
-    <app-youtube-metadata-form
+    <app-sc-image-picker ngProjectAs="imageCropper"></app-sc-image-picker>
+    <app-sc-metadata-form
       class="full-width"
       ngProjectAs="metadataForm"
-    ></app-youtube-metadata-form>
+    ></app-sc-metadata-form>
   </app-metadata>
   <app-download ngProjectAs="downloadSection" [hideStep]="hideSteps$ | async">
-    <app-youtube-format-selector
-      ngProjectAs="formatSelector"
-    ></app-youtube-format-selector>
-    <app-youtube-preview-image
-      ngProjectAs="previewImage"
-    ></app-youtube-preview-image>
-    <app-youtube-preview-data
-      ngProjectAs="previewData"
-    ></app-youtube-preview-data>
-    <app-youtube-download-button
+    <app-sc-preview-image ngProjectAs="previewImage"></app-sc-preview-image>
+    <app-sc-preview-data ngProjectAs="previewData"></app-sc-preview-data>
+    <app-sc-download-button
       ngProjectAs="downloadButton"
-    ></app-youtube-download-button>
+    ></app-sc-download-button>
     <app-loading
       class="downloading-query"
       ngProjectAs="downloadingQuery"

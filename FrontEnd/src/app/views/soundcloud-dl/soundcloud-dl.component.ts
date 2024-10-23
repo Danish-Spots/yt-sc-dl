@@ -1,23 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { StepperComponent } from '../../components/stepper/stepper.component';
-import { YoutubeUrlComponent } from '../../components/containers/youtube/youtube-url/youtube-url.component';
 import { FetchComponent } from '../../components/layouts/fetch/fetch.component';
 import { LoadingComponent } from '../../components/pure/loading/loading.component';
-import { YoutubeFacade } from '../../facades/yt-store.facade';
 import { AsyncPipe } from '@angular/common';
 import { MetadataComponent } from '../../components/layouts/metadata/metadata.component';
 import { DownloadComponent } from '../../components/layouts/download/download.component';
-import { YoutubePreviewImageComponent } from '../../components/containers/youtube/youtube-preview/image/youtube-preview-image.component';
 import { NoDataComponent } from '../../components/pure/no-data/no-data.component';
-import { YoutubePreviewDataComponent } from '../../components/containers/youtube/youtube-preview/data/youtube-preview-data.component';
+
 import {
-  YoutubeDataComponent,
-  YoutubeDownloadButtonComponent,
-  YoutubeFormatSelector,
-  YoutubeImageCropperComponent,
-  YoutubeMetadataFormComponent,
-} from '../../components/containers/youtube';
-import { ScImagePickerComponent } from '../../components/containers/soundcloud';
+  ScDataComponent,
+  ScDownloadButtonComponent,
+  ScImagePickerComponent,
+  ScMetadataFormComponent,
+  ScPreviewDataComponent,
+  ScPreviewImageComponent,
+  ScUrlComponent,
+} from '../../components/containers/soundcloud';
+import { ScFacade } from '../../facades/sc-store.facade';
 
 @Component({
   selector: 'app-soundcloud-dl',
@@ -26,26 +25,24 @@ import { ScImagePickerComponent } from '../../components/containers/soundcloud';
   standalone: true,
   imports: [
     StepperComponent,
-    YoutubeUrlComponent,
+    ScUrlComponent,
     FetchComponent,
     LoadingComponent,
-    YoutubeDataComponent,
+    ScDataComponent,
     AsyncPipe,
     MetadataComponent,
-    YoutubeImageCropperComponent,
-    YoutubeMetadataFormComponent,
+    ScMetadataFormComponent,
     DownloadComponent,
-    YoutubeFormatSelector,
-    YoutubeDownloadButtonComponent,
+    ScDownloadButtonComponent,
     NoDataComponent,
-    YoutubePreviewImageComponent,
-    YoutubePreviewDataComponent,
+    ScPreviewImageComponent,
+    ScPreviewDataComponent,
     ScImagePickerComponent,
   ],
 })
 export class SoundcloudDlComponent {
-  ytFacade = inject(YoutubeFacade);
-  loadingState$ = this.ytFacade.ytDataLoading$;
-  hideSteps$ = this.ytFacade.ytHideSteps$;
-  downloading$ = this.ytFacade.ytDownloading$;
+  scFacade = inject(ScFacade);
+  loadingState$ = this.scFacade.scDataLoading$;
+  hideSteps$ = this.scFacade.scHideSteps$;
+  downloading$ = this.scFacade.scDownloading$;
 }

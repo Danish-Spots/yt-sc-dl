@@ -5,7 +5,6 @@ import { YoutubeFacade } from '../../../../facades/yt-store.facade';
 @Component({
   selector: 'app-youtube-url',
   templateUrl: './youtube-url.component.html',
-  styleUrl: './youtube-url.component.scss',
   standalone: true,
   imports: [UrlComponent],
 })

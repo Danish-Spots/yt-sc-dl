@@ -1,5 +1,5 @@
 <mat-stepper>
-  <mat-step label="Input youtube url" state="phone">
+  <mat-step [label]="firstStepLabel">
     <div class="step-content">
       <ng-content select="urlSection"></ng-content>
       <div>
@@ -7,7 +7,7 @@
       </div>
     </div>
   </mat-step>
-  <mat-step label="Setup metadata" state="chat">
+  <mat-step label="Setup metadata">
     <div class="step-content">
       <ng-content select="metadataSection"></ng-content>
       <div>
@@ -21,12 +21,4 @@
       <ng-content select="downloadSection"></ng-content>
     </div>
   </mat-step>
-
-  <!-- Icon overrides. -->
-  <ng-template matStepperIcon="phone">
-    <mat-icon>call_end</mat-icon>
-  </ng-template>
-  <ng-template matStepperIcon="chat">
-    <mat-icon>forum</mat-icon>
-  </ng-template>
 </mat-stepper>

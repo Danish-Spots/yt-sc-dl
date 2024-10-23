@@ -25,6 +25,7 @@ export class UrlComponent {
   @Input({ required: true }) set allowedUrlsRegex(allowedUrlsRegex: RegExp) {
     this.urlControl.addValidators(this.verifyUrl(allowedUrlsRegex));
   }
+  @Input() errorText!: string;
 
   @Output() emitUrl = new EventEmitter<string>();
 
