@@ -19,6 +19,8 @@ Downloads are tagged using TagLibSharp, allowing for drag and drop into Apple Mu
 For Soundcloud - Specifying custom image sources
 For Youtube - Cropping images into 800x800 (cover art in Apple Music expects this as a minimum from what I could find).
 
+As the tool was built with Docker in mind for deployment, the entire tool can be run inside of docker and you only need to have docker installed to use it.
+
 ## Tech
 
 Front end
