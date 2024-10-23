@@ -1,0 +1,10 @@
+<div class="image-container">
+  <img
+    #image
+    class="image"
+    [src]="imageUrl"
+    (load)="imageLoaded(image)"
+    alt="thumbnail"
+  />
+  {{ naturalWidth }} x {{ naturalHeight }}
+</div>

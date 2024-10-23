@@ -1,20 +1,23 @@
 import { Component, inject } from '@angular/core';
 import { StepperComponent } from '../../components/stepper/stepper.component';
-import { YoutubeUrlComponent } from '../../components/containers/youtube-url/youtube-url.component';
+import { YoutubeUrlComponent } from '../../components/containers/youtube/youtube-url/youtube-url.component';
 import { FetchComponent } from '../../components/layouts/fetch/fetch.component';
 import { LoadingComponent } from '../../components/pure/loading/loading.component';
-import { YoutubeDataComponent } from '../../components/containers/youtube-data/youtube-data.component';
 import { YoutubeFacade } from '../../facades/yt-store.facade';
 import { AsyncPipe } from '@angular/common';
 import { MetadataComponent } from '../../components/layouts/metadata/metadata.component';
-import { YoutubeImageCropperComponent } from '../../components/containers/youtube-image-cropper/youtube-image-cropper.component';
-import { YoutubeMetadataFormComponent } from '../../components/containers/youtube-metadata-form/youtube-metadata-form.component';
 import { DownloadComponent } from '../../components/layouts/download/download.component';
-import { YoutubeFormatSelector } from '../../components/containers/youtube-format-selector/youtube-format-selector.component';
-import { YoutubePreviewImageComponent } from '../../components/containers/youtube-preview/image/youtube-preview-image.component';
-import { YoutubeDownloadButtonComponent } from '../../components/containers/youtube-download-button/youtube-download-button.component';
+import { YoutubePreviewImageComponent } from '../../components/containers/youtube/youtube-preview/image/youtube-preview-image.component';
 import { NoDataComponent } from '../../components/pure/no-data/no-data.component';
-import { YoutubePreviewDataComponent } from '../../components/containers/youtube-preview/data/youtube-preview-data.component';
+import { YoutubePreviewDataComponent } from '../../components/containers/youtube/youtube-preview/data/youtube-preview-data.component';
+import {
+  YoutubeDataComponent,
+  YoutubeDownloadButtonComponent,
+  YoutubeFormatSelector,
+  YoutubeImageCropperComponent,
+  YoutubeMetadataFormComponent,
+} from '../../components/containers/youtube';
+import { ScImagePickerComponent } from '../../components/containers/soundcloud';
 
 @Component({
   selector: 'app-soundcloud-dl',
@@ -37,6 +40,7 @@ import { YoutubePreviewDataComponent } from '../../components/containers/youtube
     NoDataComponent,
     YoutubePreviewImageComponent,
     YoutubePreviewDataComponent,
+    ScImagePickerComponent,
   ],
 })
 export class SoundcloudDlComponent {

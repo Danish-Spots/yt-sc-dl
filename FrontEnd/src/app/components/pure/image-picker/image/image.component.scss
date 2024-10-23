@@ -1,0 +1,8 @@
+.image-container {
+  width: 200px;
+  .image {
+    object-fit: scale-down;
+    width: inherit;
+    border-radius: 6px;
+  }
+}

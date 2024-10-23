@@ -1,0 +1,5 @@
+<app-image-picker
+  [images]="images$ | async"
+  (selectedImageChanged)="imageChanged($event)"
+  (addImageEvent)="addImage($event)"
+></app-image-picker>

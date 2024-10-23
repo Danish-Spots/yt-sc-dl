@@ -1,0 +1,23 @@
+.images-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .add-image {
+    border-radius: 6px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+  .add-new-button {
+    margin-left: 8px;
+  }
+}

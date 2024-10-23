@@ -1,0 +1,40 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Image picker component </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <mat-radio-group
+        [ngModel]="selectedImage"
+        (ngModelChange)="changeSelectedImage($event)"
+        class="images-container"
+        aria-label="Select an option"
+      >
+        @for (item of images; track $index) {
+        <mat-radio-button [value]="item">
+          <app-image [imageUrl]="item"></app-image>
+        </mat-radio-button>
+
+        } @if (showAddForm) {
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Image url</mat-label>
+            <input matInput [formControl]="imageUrlFormControl" />
+          </mat-form-field>
+          <button
+            class="add-new-button"
+            mat-stroked-button
+            (click)="addImage()"
+          >
+            Add
+          </button>
+        </div>
+        } @else {
+        <button mat-stroked-button (click)="addNewImage()" class="add-image">
+          <mat-icon>add</mat-icon>
+        </button>
+        }
+      </mat-radio-group>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,6 +1,7 @@
 <app-stepper>
   <app-fetch ngProjectAs="urlSection">
-    <app-youtube-url ngProjectAs="urlField"></app-youtube-url>
+    <app-sc-image-picker ngProjectAs="urlField"></app-sc-image-picker>
+    <!-- <app-youtube-url ngProjectAs="urlField"></app-youtube-url> -->
     <app-loading
       ngProjectAs="dataVisualisation"
       [loadingState]="loadingState$ | async"

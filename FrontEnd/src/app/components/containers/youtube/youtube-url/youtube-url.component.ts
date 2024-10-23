@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UrlComponent } from '../../pure/url/url.component';
+import { UrlComponent } from '../../../pure/url/url.component';
 import { Store } from '@ngrx/store';
-import { YoutubeActions } from '../../../store/youtube-state/youtube.actions';
-import { YoutubeFacade } from '../../../facades/yt-store.facade';
+import { YoutubeActions } from '../../../../store/youtube-state/youtube.actions';
+import { YoutubeFacade } from '../../../../facades/yt-store.facade';
 
 @Component({
   selector: 'app-youtube-url',
