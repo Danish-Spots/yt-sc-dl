@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { UrlDataComponent } from '../../pure/url-data/url-data.component';
-import { YoutubeFacade } from '../../../facades/yt-store.facade';
 import { Observable } from 'rxjs';
-import { UrlData } from '../../../view-models/url-data';
 import { AsyncPipe } from '@angular/common';
+import { YoutubeFacade } from '../../../../facades/yt-store.facade';
+import { UrlData } from '../../../../view-models/url-data';
+import { UrlDataComponent } from '../../../pure/url-data/url-data.component';
 
 @Component({
   selector: 'app-youtube-data',
   templateUrl: './youtube-data.component.html',
-  styleUrl: './youtube-data.component.scss',
   standalone: true,
   imports: [UrlDataComponent, AsyncPipe],
 })

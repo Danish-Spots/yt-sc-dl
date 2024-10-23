@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { DownloadButtonComponent } from '../../pure/download-button/download-button.component';
-import { YoutubeFacade } from '../../../facades/yt-store.facade';
+import { YoutubeFacade } from '../../../../facades/yt-store.facade';
+import { DownloadButtonComponent } from '../../../pure/download-button/download-button.component';
 
 @Component({
   selector: 'app-youtube-download-button',

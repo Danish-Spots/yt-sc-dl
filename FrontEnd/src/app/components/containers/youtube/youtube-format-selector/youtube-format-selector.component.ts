@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormatSelectorComponent } from '../../pure/format-selector/format-selector.component';
-import { YoutubeFacade } from '../../../facades/yt-store.facade';
+import { YoutubeFacade } from '../../../../facades/yt-store.facade';
+import { FormatSelectorComponent } from '../../../pure/format-selector/format-selector.component';
 
 @Component({
   selector: 'app-youtube-format-selector',

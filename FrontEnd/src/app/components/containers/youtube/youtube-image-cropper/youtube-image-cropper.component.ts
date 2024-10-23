@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ImageCropperComponent } from '../../pure/image-cropper/image-cropper.component';
-import { YoutubeFacade } from '../../../facades/yt-store.facade';
 import { AsyncPipe } from '@angular/common';
+import { ImageCropperComponent } from '../../../pure/image-cropper/image-cropper.component';
+import { YoutubeFacade } from '../../../../facades/yt-store.facade';
 
 @Component({
   selector: 'app-youtube-image-cropper',
