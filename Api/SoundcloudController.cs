@@ -45,13 +45,14 @@ public class SoundcloudController : ControllerBase
     }
 
     [HttpPost("soundcloud-data")]
-    public IActionResult GetVideoData([FromBody] ScDataRequest request)
+    public IActionResult GetVideoData([FromBody] MetadataRequestDto request)
     {
-        if (!Uri.IsWellFormedUriString(request.ScUrl, UriKind.Absolute)) {
+        if (!Uri.IsWellFormedUriString(request.Url, UriKind.Absolute))
+        {
             return BadRequest("Format is not a well formed URI");
         }
 
-        string arguments = $"-j {request.ScUrl}";
+        string arguments = $"-j {request.Url}";
 
         ProcessStartInfo psi = new ProcessStartInfo
         {
@@ -136,7 +137,7 @@ public class SoundcloudController : ControllerBase
                             MimeType = System.Net.Mime.MediaTypeNames.Image.Png,
                             Data = new TagLib.ByteVector(imageBytes)
                         };
-                        tagFile.Tag.Pictures = new TagLib.IPicture[] {picture};
+                        tagFile.Tag.Pictures = new TagLib.IPicture[] { picture };
 
                         tagFile.Save();
                     }
@@ -164,19 +165,20 @@ public class SoundcloudController : ControllerBase
         {
             return StatusCode(500, new { Message = "Server error", Error = ex.Message });
         }
-   
+
     }
 
     [HttpPost("convert-image")]
     public IActionResult ConvertImage([FromBody] ImageConversionRequestDto request)
     {
-        if (!Uri.IsWellFormedUriString(request.thumbnailUrl, UriKind.Absolute)) {
+        if (!Uri.IsWellFormedUriString(request.thumbnailUrl, UriKind.Absolute))
+        {
             return BadRequest("Format is not a well formed URI");
         }
 
-        ImageDto Image = new ImageDto{Image = FetchImageAsBase64(request.thumbnailUrl) };
+        ImageDto Image = new ImageDto { Image = FetchImageAsBase64(request.thumbnailUrl) };
 
-        return Ok(Image); 
+        return Ok(Image);
     }
 
     private string FetchImageAsBase64(string imageUrl)
@@ -211,10 +213,10 @@ public class ScDownloadRequest
 {
     public string VideoUrl { get; set; }
     public string title { get; set; }
-    public string album {get;set;}
-    public string channel {get; set;}
-    public string image {get; set;}
-    public string fileExtension {get; set;}
+    public string album { get; set; }
+    public string channel { get; set; }
+    public string image { get; set; }
+    public string fileExtension { get; set; }
 }
 
 public class ScImageDto(string _ID, string _Width, string _Height, string _Url)
@@ -241,8 +243,9 @@ public class ScDataJson
     public string channel { get; set; }
 }
 
-public static class ScFormat {
-    public static Dictionary<string, (string extension, string mimeType)>  formatMapping = new Dictionary<string, (string extension, string mimeType)>
+public static class ScFormat
+{
+    public static Dictionary<string, (string extension, string mimeType)> formatMapping = new Dictionary<string, (string extension, string mimeType)>
     {
         { "best", (".opus", "audio/opus") },
         { "flac", (".flac", "audio/flac") },

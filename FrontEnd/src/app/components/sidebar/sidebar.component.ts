@@ -19,6 +19,12 @@ export class SidebarComponent {
     this.router.navigateByUrl('/yt-audio');
     drawer.toggle();
   }
+
+  routeToSoundcloudDl(drawer: MatDrawer) {
+    this.router.navigateByUrl('/sc-audio');
+    drawer.toggle();
+  }
+
   routeToHome() {
     this.router.navigateByUrl('/');
   }

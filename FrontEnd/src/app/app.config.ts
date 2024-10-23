@@ -1,7 +1,6 @@
 import {
   ApplicationConfig,
   provideExperimentalZonelessChangeDetection,
-  provideZoneChangeDetection,
   isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -15,6 +14,9 @@ import { youtubeReducer } from './store/youtube-state/youtube.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { YoutubeEffects } from './store/youtube-state/youtube.effects';
+import { SoundcloudSelectors } from './store/soundcloud-state/soundcloud.selectors';
+import { soundcloudReducer } from './store/soundcloud-state/soundcloud.reducer';
+import { SoundcloudEffects } from './store/soundcloud-state/soundcloud.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore(),
     provideState(YOUTUBE_STATE_KEY, youtubeReducer),
-    provideEffects(YoutubeEffects),
+    provideState(SoundcloudSelectors.SOUNDCLOUD_STATE_KEY, soundcloudReducer),
+    provideEffects(YoutubeEffects, SoundcloudEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

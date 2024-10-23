@@ -1,0 +1,8 @@
+:host {
+  margin: 32px;
+  display: flex;
+  flex-direction: column;
+  .downloading-query {
+    margin-top: 16px;
+  }
+}
