@@ -19,7 +19,11 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { MetadataRequestDto } from '../model/metadata-request-dto';
 // @ts-ignore
+import { StatusCheckDto } from '../model/status-check-dto';
+// @ts-ignore
 import { YtDownloadRequestDto } from '../model/yt-download-request-dto';
+// @ts-ignore
+import { YtMetadataDto } from '../model/yt-metadata-dto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -97,10 +101,10 @@ export class YoutubeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<Blob>;
+    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Blob>>;
+    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Blob>>;
+    public apiYoutubeDownloadAudioPost(ytDownloadRequestDto?: YtDownloadRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -108,6 +112,12 @@ export class YoutubeService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'audio/opus',
+                'audio/flac',
+                'audio/m4a',
+                'audio/mpeg',
+                'audio/ogg',
+                'audio/wav'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -137,23 +147,12 @@ export class YoutubeService {
             localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
         }
 
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
         let localVarPath = `/api/Youtube/download-audio`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: ytDownloadRequestDto,
-                responseType: <any>responseType_,
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
@@ -167,10 +166,10 @@ export class YoutubeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiYoutubeStatusGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiYoutubeStatusGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiYoutubeStatusGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiYoutubeStatusGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiYoutubeStatusGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<StatusCheckDto>;
+    public apiYoutubeStatusGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<StatusCheckDto>>;
+    public apiYoutubeStatusGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<StatusCheckDto>>;
+    public apiYoutubeStatusGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -178,6 +177,7 @@ export class YoutubeService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -208,7 +208,7 @@ export class YoutubeService {
         }
 
         let localVarPath = `/api/Youtube/status`;
-        return this.httpClient.request<any>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<StatusCheckDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -226,10 +226,10 @@ export class YoutubeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<YtMetadataDto>;
+    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<YtMetadataDto>>;
+    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<YtMetadataDto>>;
+    public apiYoutubeYoutubeDataPost(metadataRequestDto?: MetadataRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -237,6 +237,7 @@ export class YoutubeService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -278,7 +279,7 @@ export class YoutubeService {
         }
 
         let localVarPath = `/api/Youtube/youtube-data`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<YtMetadataDto>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: metadataRequestDto,

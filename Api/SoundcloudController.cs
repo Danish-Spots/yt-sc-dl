@@ -21,7 +21,13 @@ public class SoundcloudController : BaseController
         _taggingService = taggingService;
     }
 
+    /// <summary>
+    /// Checks status of yt-dlp
+    /// </summary>
+    /// <returns>Version of yt-dlp installed</returns>
     [HttpGet("status")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StatusCheckDto))]
     public IActionResult StatusCheck()
     {
         try
@@ -35,7 +41,14 @@ public class SoundcloudController : BaseController
         }
     }
 
+    /// <summary>
+    /// Fetch metadata for a soundcloud track
+    /// </summary>
+    /// <param name="request">object containing request url</param>
+    /// <returns></returns>
     [HttpPost("soundcloud-data")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ScMetadataDto))]
     public IActionResult GetVideoData([FromBody] MetadataRequestDto request)
     {
         return Execute(request.Url, () =>
@@ -56,7 +69,14 @@ public class SoundcloudController : BaseController
         });
     }
 
+    /// <summary>
+    /// Download soundcloud audio
+    /// </summary>
+    /// <param name="request">object containing various properties which setup metadata of the downloaded file and url</param>
+    /// <returns>Blob file</returns>
     [HttpPost("download-audio")]
+    [Produces("audio/opus","audio/flac","audio/m4a","audio/mpeg","audio/opus","audio/ogg","audio/wav")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResult))]
     public IActionResult DownloadAudio([FromBody] ScDownloadRequestDto request)
     {
 

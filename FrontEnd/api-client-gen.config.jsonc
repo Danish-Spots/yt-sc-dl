@@ -7,5 +7,5 @@
   "providedIn": "root",
   "supportsES6": true,
   "useSingleRequestParameter": false,
-  "nullSafeAdditionalProps": true
+  "nullSafeAdditionalProps": false
 }

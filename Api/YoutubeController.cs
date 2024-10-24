@@ -16,8 +16,13 @@ public class YoutubeController : BaseController
         _imageService = imageService;
     }
 
-
+    /// <summary>
+    /// Checks status of yt-dlp
+    /// </summary>
+    /// <returns>Version of yt-dlp installed</returns>
     [HttpGet("status")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StatusCheckDto))]
     public IActionResult StatusCheck()
     {
         try
@@ -31,7 +36,14 @@ public class YoutubeController : BaseController
         }
     }
 
+    /// <summary>
+    /// Fetch metadata for a youtube video
+    /// </summary>
+    /// <param name="request">object containing request url</param>
+    /// <returns></returns>
     [HttpPost("youtube-data")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(YtMetadataDto))]
     public IActionResult GetVideoData([FromBody] MetadataRequestDto request)
     {
 
@@ -51,7 +63,14 @@ public class YoutubeController : BaseController
     }
 
 
+    /// <summary>
+    /// Download youtube video in desired format
+    /// </summary>
+    /// <param name="request">object containing various properties which setup metadata of the downloaded file and url</param>
+    /// <returns>Blob file</returns>
     [HttpPost("download-audio")]
+    [Produces("audio/opus","audio/flac","audio/m4a","audio/mpeg","audio/opus","audio/ogg","audio/wav")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResult))]
     public IActionResult DownloadAudio([FromBody] YtDownloadRequestDto request)
     {
 

@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "docker-gen-api-spec-windows": "rm -rf .\\src\\app\\api && docker run --rm -v %cd%:/local openapitools/openapi-generator-cli generate -i /local/api-spec.yaml -g typescript-angular -o /local/src/app/api -c /local/api-client-gen.config.jsonc",
     "docker-gen-api-spec": "rm -rf ./src/app/api && docker run --rm -v $PWD:/local openapitools/openapi-generator-cli generate -i /local/api-spec.yaml -g typescript-angular -o /local/src/app/api -c /local/api-client-gen.config.jsonc"
   },
   "private": true,

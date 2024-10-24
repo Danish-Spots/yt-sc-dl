@@ -20,6 +20,10 @@ import { Observable }                                        from 'rxjs';
 import { MetadataRequestDto } from '../model/metadata-request-dto';
 // @ts-ignore
 import { ScDownloadRequestDto } from '../model/sc-download-request-dto';
+// @ts-ignore
+import { ScMetadataDto } from '../model/sc-metadata-dto';
+// @ts-ignore
+import { StatusCheckDto } from '../model/status-check-dto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -97,10 +101,10 @@ export class SoundcloudService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<Blob>;
+    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Blob>>;
+    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Blob>>;
+    public apiSoundcloudDownloadAudioPost(scDownloadRequestDto?: ScDownloadRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'audio/opus' | 'audio/flac' | 'audio/m4a' | 'audio/mpeg' | 'audio/ogg' | 'audio/wav', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -108,6 +112,12 @@ export class SoundcloudService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'audio/opus',
+                'audio/flac',
+                'audio/m4a',
+                'audio/mpeg',
+                'audio/ogg',
+                'audio/wav'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -137,23 +147,12 @@ export class SoundcloudService {
             localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
         }
 
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
         let localVarPath = `/api/Soundcloud/download-audio`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: scDownloadRequestDto,
-                responseType: <any>responseType_,
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
                 observe: observe,
@@ -168,10 +167,10 @@ export class SoundcloudService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ScMetadataDto>;
+    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ScMetadataDto>>;
+    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ScMetadataDto>>;
+    public apiSoundcloudSoundcloudDataPost(metadataRequestDto?: MetadataRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -179,6 +178,7 @@ export class SoundcloudService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -220,7 +220,7 @@ export class SoundcloudService {
         }
 
         let localVarPath = `/api/Soundcloud/soundcloud-data`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<ScMetadataDto>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: metadataRequestDto,
@@ -238,10 +238,10 @@ export class SoundcloudService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiSoundcloudStatusGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public apiSoundcloudStatusGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public apiSoundcloudStatusGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public apiSoundcloudStatusGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiSoundcloudStatusGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<StatusCheckDto>;
+    public apiSoundcloudStatusGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<StatusCheckDto>>;
+    public apiSoundcloudStatusGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<StatusCheckDto>>;
+    public apiSoundcloudStatusGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -249,6 +249,7 @@ export class SoundcloudService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -279,7 +280,7 @@ export class SoundcloudService {
         }
 
         let localVarPath = `/api/Soundcloud/status`;
-        return this.httpClient.request<any>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<StatusCheckDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
