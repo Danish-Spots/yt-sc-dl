@@ -12,7 +12,10 @@ public class BaseController : ControllerBase
         {
             return action();
         }
-
+        catch (InvalidFormatException ex)
+        {
+            return StatusCode(400, new { ex.Message, ex.ChosenFormmat});
+        }
         catch (FileNotFoundException ex)
         {
             return StatusCode(500, new { ex.Message, ex.FileName });

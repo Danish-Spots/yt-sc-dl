@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Components.Web;
+
 public class TaggingService : ITaggingService
 {
     private IImageService _imageService;
@@ -6,18 +8,26 @@ public class TaggingService : ITaggingService
         _imageService = imageService;
     }
 
-    public void TagYoutube() { }
+    public void TagYoutube(YtDownloadRequestDto request, string outputFile) {
+        _tagFile(request.Thumbnail, request.Album, request.Title, request.Artist, outputFile);
+    }
+    
     public void TagSoundcloud(ScDownloadRequestDto request, string outputFile)
     {
         string Image = _imageService.FetchImageAsBase64(request.Thumbnail);
-        var imageBytes = _imageService.GetImageBytes(Image);
+        _tagFile(Image, request.Album, request.Title, request.Artist, outputFile);
+    }
+
+    private void _tagFile(string thumbnail, string album, string title, string artist, string outputFile)
+    {
+        var imageBytes = _imageService.GetImageBytes(thumbnail);
 
         using (var tagFile = TagLib.File.Create(outputFile))
         {
 
-            tagFile.Tag.Album = request.Album;
-            tagFile.Tag.Title = request.Title;
-            tagFile.Tag.AlbumArtists = [request.Artist];
+            tagFile.Tag.Album = album;
+            tagFile.Tag.Title = title;
+            tagFile.Tag.AlbumArtists = [artist];
 
             TagLib.Picture picture = new TagLib.Picture
             {

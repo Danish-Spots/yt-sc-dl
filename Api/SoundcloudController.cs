@@ -43,7 +43,7 @@ public class SoundcloudController : BaseController
             string arguments = $"-j {request.Url}";
             string processResult = _ytDlpProcess.FetchMetadata(arguments);
 
-            var resultObj = JsonDeserializer.Deserialize<YtDlpMetadata>(processResult);
+            var resultObj = JsonDeserializer.Deserialize<YtDlpMetadataSc>(processResult);
             var thumbnails = resultObj.thumbnails.Select(t => t.url).ToList();
             ScMetadataDto result = new ScMetadataDto
             {
@@ -62,7 +62,7 @@ public class SoundcloudController : BaseController
 
         return Execute(request.Url, () =>
         {
-            string outputFilePath = _ytDlpProcess.DownloadFile(request.Url);
+            string outputFilePath = _ytDlpProcess.DownloadSoundcloud(request.Url);
             try
             {
                 _taggingService.TagSoundcloud(request, outputFilePath);

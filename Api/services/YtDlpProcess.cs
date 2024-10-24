@@ -21,7 +21,7 @@ public class YtDlpProcess : IYtDlpProcess
         return RunProcess(fetchArgs);
     }
 
-    public string DownloadFile(string url)
+    public string DownloadSoundcloud(string url)
     {
         string baseFileName = Path.GetFileNameWithoutExtension(url);
 
@@ -39,6 +39,33 @@ public class YtDlpProcess : IYtDlpProcess
         }
 
         return outputFilePathWithExtension;
+    }
+
+    public (string outputFilePath, string mimeType) DownloadYoutube(string url, string fileExtension)
+    {
+        if (Format.formatMapping.TryGetValue(fileExtension.ToLower(), out var formatInfo))
+        {
+            string outputFileExtension = formatInfo.extension;
+            string baseFileName = Path.GetFileNameWithoutExtension(url);
+
+            string outputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "downloads");
+            string outputFilePath = Path.Combine(outputDirectory, $"{baseFileName}"); // Use %(ext)s placeholder
+            string arguments = $"-x --audio-format {fileExtension} --audio-quality 0 -o \"{outputFilePath}.%(ext)s\" {url}";
+            string outputFilePathWithExtension = $"{outputFilePath}{outputFileExtension}";
+
+            RunProcess(arguments);
+            
+            if (!File.Exists(outputFilePathWithExtension))
+            {
+                throw new FileNotFoundException(message: "Download failed: file not found", fileName: outputFilePathWithExtension);
+            }
+
+            return (outputFilePathWithExtension, formatInfo.mimeType);
+        } 
+        else 
+        {
+            throw new InvalidFormatException(fileExtension, "Invalid format provided to download");
+        }
     }
 
 
