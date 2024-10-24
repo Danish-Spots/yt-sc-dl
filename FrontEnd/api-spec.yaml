@@ -1,0 +1,156 @@
+openapi: 3.0.1
+info:
+  title: Api
+  version: "1.0"
+paths:
+  /api/Soundcloud/status:
+    get:
+      tags:
+        - Soundcloud
+      responses:
+        "200":
+          description: OK
+  /api/Soundcloud/soundcloud-data:
+    post:
+      tags:
+        - Soundcloud
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+      responses:
+        "200":
+          description: OK
+  /api/Soundcloud/download-audio:
+    post:
+      tags:
+        - Soundcloud
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScDownloadRequestDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/ScDownloadRequestDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/ScDownloadRequestDto"
+      responses:
+        "200":
+          description: OK
+  /api/Youtube/status:
+    get:
+      tags:
+        - Youtube
+      responses:
+        "200":
+          description: OK
+  /api/Youtube/youtube-data:
+    post:
+      tags:
+        - Youtube
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/MetadataRequestDto"
+      responses:
+        "200":
+          description: OK
+  /api/Youtube/download-audio:
+    post:
+      tags:
+        - Youtube
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/YtDownloadRequestDto"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/YtDownloadRequestDto"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/YtDownloadRequestDto"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    MetadataRequestDto:
+      required:
+        - url
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ScDownloadRequestDto:
+      required:
+        - album
+        - artist
+        - thumbnail
+        - title
+        - url
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        album:
+          type: string
+          nullable: true
+        artist:
+          type: string
+          nullable: true
+        thumbnail:
+          type: string
+          nullable: true
+      additionalProperties: false
+    YtDownloadRequestDto:
+      required:
+        - album
+        - artist
+        - fileExtension
+        - thumbnail
+        - title
+        - url
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        album:
+          type: string
+          nullable: true
+        artist:
+          type: string
+          nullable: true
+        thumbnail:
+          type: string
+          nullable: true
+        fileExtension:
+          type: string
+          nullable: true
+      additionalProperties: false

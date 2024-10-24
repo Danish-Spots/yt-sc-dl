@@ -2,11 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { YoutubeActions } from './youtube.actions';
 import { catchError, map, switchMap } from 'rxjs';
-import { ApiService } from '../../services/api.service';
 import { createFeature, Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
 import { selectDownloadData, selectMetadata } from './youtube.selectors';
 import saveAs from 'file-saver';
+import { YoutubeService } from '../../api';
 
 @Injectable()
 export class YoutubeEffects {
@@ -14,14 +14,14 @@ export class YoutubeEffects {
   private actions$ = inject(Actions);
   private store = inject(Store);
 
-  constructor(private ytApi: ApiService) {}
+  constructor(private ytApi: YoutubeService) {}
 
   setYtUrl = createEffect(() =>
     this.actions$.pipe(
       ofType(YoutubeActions.setUrl),
       switchMap(({ url }) =>
-        this.ytApi.GetMetadata(url).pipe(
-          map((data: any) =>
+        this.ytApi.apiYoutubeYoutubeDataPost({ url }).pipe(
+          map((data) =>
             YoutubeActions.setData({
               data: {
                 title: data.title,
@@ -41,16 +41,23 @@ export class YoutubeEffects {
       ofType(YoutubeActions.downloadAudio),
       concatLatestFrom(() => this.store.select(selectDownloadData)),
       switchMap(([, { url, metadata, format }]) => {
-        if (!metadata.title || !metadata.artist || !format || !metadata.image)
+        if (
+          !metadata.title ||
+          !metadata.artist ||
+          !metadata.album ||
+          !format ||
+          !metadata.image
+        )
           return [YoutubeActions.downloadErrorDataPassedIncorrectly()];
         return this.ytApi
-          .DownloadAudio(
+          .apiYoutubeDownloadAudioPost({
             url,
-            metadata.title,
-            metadata.artist,
-            format,
-            metadata.image
-          )
+            title: metadata.title,
+            artist: metadata.artist,
+            album: metadata.album,
+            fileExtension: format,
+            thumbnail: metadata.image,
+          })
           .pipe(
             map((response: Blob) => {
               saveAs(response);
