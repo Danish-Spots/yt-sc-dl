@@ -1,3 +1,3 @@
-export * from './metadataRequestDto';
-export * from './scDownloadRequestDto';
-export * from './ytDownloadRequestDto';
+export * from './metadata-request-dto';
+export * from './sc-download-request-dto';
+export * from './yt-download-request-dto';

@@ -1,0 +1,11 @@
+{
+  "apiModulePrefix": "Api",
+  "configurationPrefix": "Api",
+  "disallowAdditionalPropertiesIfNotPresent": true,
+  "fileNaming": "kebab-case",
+  "ngVersion": "18.2.8",
+  "providedIn": "root",
+  "supportsES6": true,
+  "useSingleRequestParameter": false,
+  "nullSafeAdditionalProps": true
+}

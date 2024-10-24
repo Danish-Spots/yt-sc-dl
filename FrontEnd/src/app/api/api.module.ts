@@ -1,31 +1,26 @@
 import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
-import { Configuration } from './configuration';
+import { ApiConfiguration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
-
-import { SoundcloudService } from './api/soundcloud.service';
-import { YoutubeService } from './api/youtube.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
-  providers: [
-    SoundcloudService,
-    YoutubeService ]
+  providers: []
 })
-export class ApiModule {
-    public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {
+export class ApiApiModule {
+    public static forRoot(configurationFactory: () => ApiConfiguration): ModuleWithProviders<ApiApiModule> {
         return {
-            ngModule: ApiModule,
-            providers: [ { provide: Configuration, useFactory: configurationFactory } ]
+            ngModule: ApiApiModule,
+            providers: [ { provide: ApiConfiguration, useFactory: configurationFactory } ]
         };
     }
 
-    constructor( @Optional() @SkipSelf() parentModule: ApiModule,
+    constructor( @Optional() @SkipSelf() parentModule: ApiApiModule,
                  @Optional() http: HttpClient) {
         if (parentModule) {
-            throw new Error('ApiModule is already loaded. Import in your base AppModule only.');
+            throw new Error('ApiApiModule is already loaded. Import in your base AppModule only.');
         }
         if (!http) {
             throw new Error('You need to import the HttpClientModule in your AppModule! \n' +
