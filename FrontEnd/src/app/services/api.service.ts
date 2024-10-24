@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://localhost:4233/api/Download';
+  private baseUrl = 'http://localhost:4201/api/Download';
   constructor(private httpClient: HttpClient) {}
 
   public GetMetadata(url: string) {

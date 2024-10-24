@@ -1,10 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 var CorsPolicy = "_ApiCorsPolicy";
 
-builder.Services.AddCors(options => 
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: CorsPolicy, 
-    policy => 
+    options.AddPolicy(name: CorsPolicy,
+    policy =>
     {
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
     });
@@ -16,6 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add dependencies 
+builder.Services.AddScoped<IYtDlpProcess, YtDlpProcess>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<ITaggingService, TaggingService>();
+
 
 var app = builder.Build();
 
@@ -25,8 +30,8 @@ var app = builder.Build();
 //     app.UseSwagger();
 //     app.UseSwaggerUI();
 // }
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // app.UseHttpsRedirection();
 app.UseRouting();
