@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { YoutubeActions } from './youtube.actions';
 import { catchError, map, switchMap } from 'rxjs';
-import { createFeature, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
-import { selectDownloadData, selectMetadata } from './youtube.selectors';
+import { selectDownloadData } from './youtube.selectors';
 import saveAs from 'file-saver';
 import { YoutubeService } from '../../api';
 
@@ -24,9 +24,9 @@ export class YoutubeEffects {
           map((data) =>
             YoutubeActions.setData({
               data: {
-                title: data.title,
-                artist: data.channel,
-                image: data.thumbnailUrl,
+                title: data.title ?? '',
+                artist: data.channel ?? '',
+                image: data.thumbnail ?? '',
               },
             })
           ),
@@ -62,7 +62,8 @@ export class YoutubeEffects {
             map((response: Blob) => {
               saveAs(response);
               return YoutubeActions.downloadSuccess();
-            })
+            }),
+            catchError(() => [YoutubeActions.downloadError()])
           );
       })
     )

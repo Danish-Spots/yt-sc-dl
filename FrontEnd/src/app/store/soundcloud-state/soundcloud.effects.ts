@@ -1,34 +1,32 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs';
-import { ApiService } from '../../services/api.service';
-import { createFeature, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
 import saveAs from 'file-saver';
-import { ScService } from '../../api/services/sc-service';
 import { SoundcloudActions } from './soundcloud.actions';
-import { ScMetadataDto } from '../../api/models/sc-metadata-dto';
 import { SoundcloudSelectors } from './soundcloud.selectors';
+import { ScMetadataDto, SoundcloudService } from '../../api';
 
 @Injectable()
 export class SoundcloudEffects {
   // Have to use injection function because using constructor results in actions being undefined
   private actions$ = inject(Actions);
   private store = inject(Store);
-  private service = inject(ScService);
+  private service = inject(SoundcloudService);
 
   setScUrl = createEffect(() =>
     this.actions$.pipe(
       ofType(SoundcloudActions.setUrl),
       switchMap(({ url }) =>
-        this.service.GetMetadata(url).pipe(
+        this.service.apiSoundcloudSoundcloudDataPost({ url }).pipe(
           map((data: ScMetadataDto) =>
             SoundcloudActions.setData({
               data: {
-                title: data.title,
-                artist: data.uploader,
-                image: data.thumbnail,
-                images: data.thumbnails,
+                title: data.title ?? '',
+                artist: data.uploader ?? '',
+                image: data.thumbnail ?? '',
+                images: data.thumbnails ?? [],
               },
             })
           ),
@@ -53,7 +51,7 @@ export class SoundcloudEffects {
         )
           return [SoundcloudActions.downloadErrorDataPassedIncorrectly()];
         return this.service
-          .DownloadAudio({
+          .apiSoundcloudDownloadAudioPost({
             url,
             title: metadata.title,
             album: metadata.album,
@@ -64,7 +62,8 @@ export class SoundcloudEffects {
             map((response: Blob) => {
               saveAs(response);
               return SoundcloudActions.downloadSuccess();
-            })
+            }),
+            catchError(() => [SoundcloudActions.downloadError()])
           );
       })
     )
