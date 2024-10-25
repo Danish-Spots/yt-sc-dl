@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: . # Path to your ASP.NET Core project
-      dockerfile: Dockerfile
+      dockerfile: Api.Dockerfile
     container_name: api-backend
     ports:
       - "4201:8080"
