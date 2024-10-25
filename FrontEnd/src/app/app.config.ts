@@ -17,8 +17,9 @@ import { YoutubeEffects } from './store/youtube-state/youtube.effects';
 import { SoundcloudSelectors } from './store/soundcloud-state/soundcloud.selectors';
 import { soundcloudReducer } from './store/soundcloud-state/soundcloud.reducer';
 import { SoundcloudEffects } from './store/soundcloud-state/soundcloud.effects';
-import { BASE_PATH, SoundcloudService, YoutubeService } from './api';
-import { environment } from '../../env';
+import { SoundcloudService, YoutubeService } from './api';
+
+import { provideApiConfig } from './init/api-config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
-    { provide: BASE_PATH, useValue: environment.basePath },
+    provideApiConfig,
     YoutubeService,
     SoundcloudService,
     provideStore(),

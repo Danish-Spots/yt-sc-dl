@@ -63,7 +63,7 @@ export class SoundcloudEffects {
               saveAs(response);
               return SoundcloudActions.downloadSuccess();
             }),
-            catchError(() => [SoundcloudActions.downloadError()])
+            catchError(() => [SoundcloudActions.downloadError])
           );
       })
     )

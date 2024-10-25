@@ -24,6 +24,10 @@ export class SidebarComponent {
     this.router.navigateByUrl('/sc-audio');
     drawer.toggle();
   }
+  routeToSettings(drawer: MatDrawer) {
+    this.router.navigateByUrl('/settings');
+    drawer.toggle();
+  }
 
   routeToHome() {
     this.router.navigateByUrl('/');

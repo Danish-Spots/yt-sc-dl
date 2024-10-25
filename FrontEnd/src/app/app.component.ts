@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { apiConfig } from './init/api-config';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 })
 export class AppComponent {
   title = 'App';
+
+  constructor() {
+    const basePath = localStorage.getItem('basePath');
+    apiConfig.basePath = basePath ?? '';
+  }
 }

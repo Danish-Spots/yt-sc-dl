@@ -7,8 +7,6 @@ import {
   selectInitialMetadata,
   selectIsDownloading,
   selectLoadingData,
-  selectMetadata,
-  selectPreviewData,
   selectPreviewDataData,
   selectPreviewDataImage,
   selectThumbnail,

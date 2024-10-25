@@ -1,0 +1,8 @@
+<div [formGroup]="settingsFrom">
+  <mat-form-field appearance="outline">
+    <mat-label>Base path</mat-label>
+    <input matInput formControlName="basePath" />
+  </mat-form-field>
+
+  <button mat-flat-button (click)="writeSettings()">save</button>
+</div>

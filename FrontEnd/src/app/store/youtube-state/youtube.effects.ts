@@ -13,8 +13,7 @@ export class YoutubeEffects {
   // Have to use injection function because using constructor results in actions being undefined
   private actions$ = inject(Actions);
   private store = inject(Store);
-
-  constructor(private ytApi: YoutubeService) {}
+  private ytApi = inject(YoutubeService);
 
   setYtUrl = createEffect(() =>
     this.actions$.pipe(
