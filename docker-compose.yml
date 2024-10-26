@@ -1,6 +1,13 @@
 version: "3.4"
 
 services:
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Frontend.Dockerfile
+    container_name: front-end
+    ports:
+      - "4200:80"
   api:
     build:
       context: ./Api
@@ -9,11 +16,3 @@ services:
     ports:
       - "4201:8080"
       - "4233:443"
-
-  frontend:
-    build:
-      context: ./FrontEnd
-      dockerfile: Frontend.Dockerfile
-    container_name: front-end
-    ports:
-      - "4200:80"
