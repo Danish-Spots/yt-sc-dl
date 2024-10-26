@@ -6,6 +6,6 @@ RUN npm install
 COPY . .
 RUN npx ng build
 
-FROM nginx:1.27.2
+FROM nginx:latest
 COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/app/browser /usr/share/nginx/html
