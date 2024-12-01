@@ -9,6 +9,10 @@ I specifically wanted a tool that would allow me to download music from youtube 
 
 Since I started this project, I have found other similar tools, but I dont think they do the same things as mine.
 
+### Note
+
+As I am not too familiar with C# development, I made use of ChatGPT for alot of it. However, I also looked up alot of what was suggested to make sure that what it was giving me was valid.
+
 ## Features
 
 Download audio from youtube in a few formats.
