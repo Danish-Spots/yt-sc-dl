@@ -6,6 +6,8 @@ This is a tool to download youtube and soundcloud content via a webpage.
 
 I was tired of having to find a website or tool online with ads and wanted to try making my own.
 I specifically wanted a tool that would allow me to download music from youtube or soundcloud with a little configuration and import into Apple Music without having to update any metadata in Apple Music.
+The reason for this is because there alot of covers I like, but those arent available where I normally stream music from.
+Then for soundcloud, it is because the artist doesnt upload to where I stream music from.
 
 Since I started this project, I have found other similar tools, but I dont think they do the same things as mine.
 
